@@ -1,0 +1,35 @@
+.main-bar{
+    /* max-width:100%; */
+    width:calc(100% - 300px - 24px);
+    float: left;
+    /* border: 2px solid red; */
+    margin: 25px 0px;
+    padding: 0;
+}
+@media (max-width:768px) {
+    
+}
+.main-bar-header{
+    display: flex;
+    height:100px;
+    align-items: center;
+    justify-content: space-between;
+    
+}
+.ask-btn{
+    border:none;
+    padding:8px 12px;
+    background-color: #009dff;
+    border-radius: 5px;
+    color:#fff;
+    font-size: 14px;
+    text-decoration: none;
+}
+
+@media (max-width:768px) {
+    .main-bar{
+        width:calc(100%-24px);
+       
+    }
+    
+  }

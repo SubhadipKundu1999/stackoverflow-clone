@@ -1,0 +1,122 @@
+.question-details-page{
+    width: calc(100% - 300px - 24px);
+    float: left;
+
+    
+}
+@media (max-width:768px) {
+
+.question-details-page{
+    width: calc(100% );
+    float: left;
+
+}
+    
+}
+.post-btn{
+    border:none;
+    padding:10px 12px;
+    background-color: #009dff;
+    border-radius: 5px;
+    color:#fff;
+    font-size: 14px;
+    text-decoration: none;
+    margin-top: 40px;
+    margin-bottom: 40px;
+}   
+
+.ans-tags {
+    width: auto;
+    padding: 5px;
+    background-color: #e1ecf4;
+    color: #39739d;
+    border-radius: 2px;
+    font-size: 13px;
+    margin-right: 5px;
+    text-decoration: none;
+  }
+  
+ .question-action-user{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+ } 
+.action-btn{
+    
+    border:none  ;
+     font-size:13px ;
+     background-color:transparent;
+     color:gray;
+      cursor:pointer;
+      margin-right: 5px;
+    }
+.display-ans{
+    padding-bottom: 15px;
+    width:100%;
+    border-bottom: 1px solid rgb(186, 183, 183);
+}
+.question-details-container{
+    padding: 10px;
+    width: 100%;
+    margin-top: 60px;
+    /* border: 1px solid red; */
+}
+.question-details-container-2{
+    width:100%;
+    display: flex;
+    /* border: 1px solid red; */
+   
+}
+.question-votes{
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center; */
+    align-items: center;
+    width:20px;
+    padding: 10px;
+}
+.question-votes p{
+    line-height: 0;
+
+}
+.questions-other-details{
+    /* border: 1px solid red; */
+width: calc(100% - 30px);
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+}
+.questions-other-details p{
+    /* line-height: 0; */
+}
+.question-body{
+    width: 100%;
+    /* border: 1px solid red; */
+}
+#answer-text-area{
+    width: 100%;
+    height:200px
+}
+.question-action-user{
+    /* border: 1px solid black; */
+    /* padding:10px; */
+    margin-top: -10px;
+}
+
+.question-action-user p{
+line-height: 0;
+}
+.question-action-user span{
+    line-height: 0;
+}
+
+.user-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+  }
+  .user-link div {
+    padding-left: 10px;
+    /* line-height: 0; */
+    text-decoration: none;
+  }

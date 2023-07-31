@@ -1,0 +1,34 @@
+button{
+    cursor: pointer;
+}
+
+.home-container-1{
+    width:100%;
+    height:100vh;
+    display: flex;
+    justify-content: flex-start;
+
+}
+.home-container-2{
+    max-width: 1100px;
+    width: calc(100% - 164px);
+    height:auto;
+    padding: 20px;
+}
+.widget-tags-div-1 {
+    display: flex;
+    padding: 5px;
+    gap:5px
+  }
+  
+  .widget-tags-div-1 p {
+    width: auto;
+    padding: 5px;
+    background-color: #e1ecf4;
+    color: #39739d;
+    border-radius: 2px;
+    font-size: 13px;
+  }
+  *{
+    box-sizing: border-box;
+  }
