@@ -1,8 +1,8 @@
 import React from 'react'
 import "./AskQuestion.css"
 import { useState } from "react";
-import {useDispatch, useSelector} from "react-redux";
-import {useNavigate} from "react-router-dom"
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom"
 import currentUserReducer from "../../reducers/currentUser.js"
 import { askQuestion } from '../../actions/askQuestion';
 const AskQuestion = () => {
@@ -11,15 +11,15 @@ const AskQuestion = () => {
   const [questionTags, setQuestionTags] = useState('')
 
   const dispatch = useDispatch();
-  const User = useSelector((state)=>(state.currentUserReducer));
+  const User = useSelector((state) => (state.currentUserReducer));
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // console.log({ questionTitle, questionBody, questionTags });
+    console.log({ questionTitle, questionBody, questionTags });
     console.log(User.result.name);
-    dispatch(askQuestion({questionTitle,questionBody,questionTags,userPosted : User.result.name},navigate));
-  
+    dispatch(askQuestion({ questionTitle, questionBody, questionTags, userPosted: User.result.name }, navigate));
+
   }
 
   const handleEnter = (e) => {
@@ -62,7 +62,14 @@ const AskQuestion = () => {
             <label htmlFor="ask-ques-tags" className='ask-ques-container-3'>
               <h4>Tags</h4>
               <p>Add up to 5 tags to describe what your question is about</p>
-              <input type="text" id="ask-ques-tags" name="ask-ques-tags" value={questionTags} onChange={(e) => { setQuestionTags(e.target.value.split(" ")) }} />
+              <input
+                type="text"
+                id="ask-ques-tags"
+                onChange={(e) => {
+                  setQuestionTags(e.target.value.split(" "));
+                }}
+                placeholder="e.g. (xml typescript wordpress)"
+              />
             </label>
 
 

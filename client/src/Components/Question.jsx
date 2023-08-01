@@ -5,7 +5,7 @@ const Question = ({ question }) => {
   return (
     <div class="question-row">
       <div className="question-col col-1">
-        <p>{question.votes}</p>
+        <p>{question.upVotes.length - question.downVotes.length}</p>
         <p>votes</p>
       </div>
       <div className="question-col col-2">
@@ -22,7 +22,7 @@ const Question = ({ question }) => {
               <p className="tag-p" key={tag}>{tag}</p>
             ))}
           </div>
-          <p className='question-time-user'>{question.askOn} {question.userPosted}</p>
+          <p className='question-time-user'>asked  {question.askedOn} {question.userPosted}</p>
         </div>
 
       </div>

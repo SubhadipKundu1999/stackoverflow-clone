@@ -7,3 +7,5 @@ const Api = axios.create({
   export const signUp=(authData)=> Api.post("/user/signup",authData);
 
   export const postQuestion = (questionData)=> Api.post("/questions/Ask",questionData);
+
+  export const getAllQuestions = ()=> Api.get("/questions/get");

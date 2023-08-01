@@ -21,8 +21,8 @@ app.get("/",(req,res)=>{
 
  //routing
 app.use('/user',userRouter);
-
 app.use("/questions", questionsRouter)
+
 const MONGODB_URI = "mongodb+srv://subhadipkundu1000:Subhadip123@stack-overflow-clone.cp2gbw4.mongodb.net/?retryWrites=true&w=majority"
 
 
