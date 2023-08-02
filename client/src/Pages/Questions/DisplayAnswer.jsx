@@ -15,8 +15,8 @@ const DisplayAnswer = ({ question }) => {
                 <button type="button" className=" action-btn" >Delete</button>
               </div>
               <div>
-                <p>asked {question.askOn}</p>
-                <Link to={'/User/${ans.userId}'} className='user-link' style={{ color: '#0086d8' ,width:"40px" }}>
+                <p>answred on  {ans.answerOn}</p>
+                <Link to={`/User/${ans.userId}`} className='user-link' style={{ color: '#0086d8' ,width:"40px" }}>
                   <Avatar
                     backgroundColor="orange"
                     px="8px"

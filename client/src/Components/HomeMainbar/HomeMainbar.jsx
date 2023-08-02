@@ -9,9 +9,7 @@ const HomeMainbar = () => {
   const user = 1;
   const navigate=useNavigate()
   let questionList = useSelector((state)=>state.questionsReducer);
-  questionList= questionList.data;
-console.log(questionList);
-
+  
  
   const checkAuth=()=>{
     if(user===null){
@@ -33,11 +31,11 @@ console.log(questionList);
       </div>
       <div>
         {
-          questionList == null ?
+          questionList.data == null ?
             <h1>Loading...</h1> :
             <>
-              <p> {questionList.length} questions</p>
-              <QuestionList questionlist={questionList} />
+              <p> {questionList.data.length} questions</p>
+              <QuestionList questionlist={questionList.data} />
             </>
         }
       </div>

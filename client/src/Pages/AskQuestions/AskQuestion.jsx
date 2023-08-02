@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom"
 import currentUserReducer from "../../reducers/currentUser.js"
-import { askQuestion } from '../../actions/askQuestion';
+import { askQuestion } from '../../actions/question';
 const AskQuestion = () => {
   const [questionTitle, setQuestionTitle] = useState('')
   const [questionBody, setQuestionBody] = useState('')

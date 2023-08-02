@@ -4,7 +4,7 @@ import "./App.css"
 import Navbar from './Components/Navbar/Navbar'
 import AllRoutes from "./AllRoutes"
 import { useDispatch } from "react-redux"
-import { getQuestions } from "./actions/getQuestions"
+import { getQuestions } from "./actions/question"
 function App() {
   const dispatch= useDispatch();
   useEffect(()=>{

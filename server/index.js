@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 import cors from "cors";
 import userRouter from "./routes/users.js";
 import questionsRouter from "./routes/questions.js"
+import answerRouter from "./routes/answer.js"
 const app = express();
 
 app.use(express.json({extended:true}));      
@@ -22,6 +23,7 @@ app.get("/",(req,res)=>{
  //routing
 app.use('/user',userRouter);
 app.use("/questions", questionsRouter)
+app.use("/answer",answerRouter)
 
 const MONGODB_URI = "mongodb+srv://subhadipkundu1000:Subhadip123@stack-overflow-clone.cp2gbw4.mongodb.net/?retryWrites=true&w=majority"
 
