@@ -3,8 +3,9 @@ import "./AskQuestion.css"
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom"
-import currentUserReducer from "../../reducers/currentUser.js"
 import { askQuestion } from '../../actions/question';
+
+
 const AskQuestion = () => {
   const [questionTitle, setQuestionTitle] = useState('')
   const [questionBody, setQuestionBody] = useState('')
@@ -16,10 +17,10 @@ const AskQuestion = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log({ questionTitle, questionBody, questionTags });
-    console.log(User.result.name);
-    dispatch(askQuestion({ questionTitle, questionBody, questionTags, userPosted: User.result.name }, navigate));
 
+  
+    dispatch(askQuestion({ questionTitle, questionBody, questionTags, userPosted: User.result.name, userId: User.result._id }, navigate));
+    
   }
 
   const handleEnter = (e) => {
@@ -32,8 +33,6 @@ const AskQuestion = () => {
     <div className='ask-ques'>
       <h1 className='ask-ques-page-heading'>Ask a Public Question</h1>
       <div className="ask-ques-container-1">
-
-        <h1>{questionBody}</h1>
 
         <form className="ask-ques-form" onSubmit={handleSubmit}>
           <div className="ask-ques-container-2">

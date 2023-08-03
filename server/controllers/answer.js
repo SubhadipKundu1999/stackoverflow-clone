@@ -4,13 +4,14 @@ import mongoose from "mongoose";
 
 export const postAnswer= async (req,res)=>{
     const {id:id} = req.params;
-    const {noOfAnswer, answerBody, userAnswered} = req.body;
+    const {noOfAnswer, answerBody, userAnswered,userId} = req.body;
+
     if(!mongoose.Types.ObjectId.isValid(id)){
         res.status(404).json({message:"Question not valid"});
     }
     updateNoOfAnswer(id,noOfAnswer);
     try{
-        const updatedQuestion = await Questions.findByIdAndUpdate(id,{$addToSet:{'answer':{answerBody, userAnswered, userId:req.userId}}} );
+        const updatedQuestion = await Questions.findByIdAndUpdate(id,{$addToSet:{'answer':{answerBody, userAnswered, userId}}} );
        res.status(200).json(updatedQuestion); 
 
      }
@@ -20,7 +21,7 @@ export const postAnswer= async (req,res)=>{
 
     }
 }
- const updateNoOfAnswer = async (id,noOfAnswer)=>
+ const updateNoOfAnswer = async (id, noOfAnswer)=>
 {
     try{
         await Questions.findByIdAndUpdate(id, {$set: {'noOfAnswer': noOfAnswer}});

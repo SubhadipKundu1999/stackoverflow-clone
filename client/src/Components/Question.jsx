@@ -1,7 +1,9 @@
 import React from 'react'
+import moment from "moment"
 import '../App.css'
 import './Question.css'
 import { Link } from 'react-router-dom'
+
 const Question = ({ question }) => {
   return (
     <div class="question-row">
@@ -30,7 +32,7 @@ const Question = ({ question }) => {
               <p className="tag-p" key={tag}>{tag}</p>
             ))}
           </div>
-          <p className='question-time-user'>asked  {question.askedOn} {question.userPosted}</p>
+          <p className='question-time-user'>asked  {moment(question.askedOn).fromNow()} {question.userPosted}</p>
         </div>
 
       </div>

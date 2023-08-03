@@ -18,8 +18,6 @@ app.get("/",(req,res)=>{
     res.send("hello from browser")
 })
 
-
-
  //routing
 app.use('/user',userRouter);
 app.use("/questions", questionsRouter)

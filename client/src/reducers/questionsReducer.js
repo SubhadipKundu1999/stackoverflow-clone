@@ -10,8 +10,13 @@ switch (action.type) {
 
     case "FETCH_ANSWER":
         return {...state}
-    default:
-        return state;
+   
+
+    case "DELETE_QUESTION":
+        return{...state};
+    
+        default:  
+         return state;
 }
 }
 

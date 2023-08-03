@@ -1,12 +1,15 @@
 import React, { useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, useLocation } from 'react-router-dom';
+import moment from 'moment';
+import copy from "copy-to-clipboard"
+
 import sortUp from "../../assets/sort-up.svg";
 import sortDown from "../../assets/sort-down.svg";
 import { Link } from 'react-router-dom';
 import Avatar from '../../Components/Avatar/Avatar';
 import DisplayAnswer from './DisplayAnswer';
 import { useDispatch, useSelector } from 'react-redux';
-import { postAnswer } from "../../actions/question.js"
+import { postAnswer, deleteQuestion } from "../../actions/question.js"
 const QuesionsDetails = () => {
   const [answer, setAnswer] = useState('');
   const User = useSelector((state) => state.currentUserReducer);
@@ -14,6 +17,7 @@ const QuesionsDetails = () => {
   questionList = questionList.data;
   const navigate = useNavigate()
   const dispatch = useDispatch();
+  const location = useLocation();
   const handlepostAnswer = (e, answerLength) => {
     e.preventDefault();
     if (User === null) {
@@ -26,13 +30,23 @@ const QuesionsDetails = () => {
       }
       dispatch(postAnswer({
         id,
-        noOfAnswer:answerLength+1, 
-        answerBody:answer,
-        userAnswered:User.result.name
+        noOfAnswer: answerLength + 1,
+        answerBody: answer,
+        userAnswered: User.result.name,
+        userId:User.result._id
       }))
 
-setAnswer("");
+      setAnswer("");
     }
+
+  }
+ const url = "http://localhost:3000"
+
+  const handleShare=()=>
+  {
+
+    copy(url+location.pathname);
+    alert(url+location.pathname);
 
   }
   // var questionList = [
@@ -232,6 +246,13 @@ setAnswer("");
   //   }
   // ];
   const { id } = useParams()
+
+const handleDeleteQuestion=(id)=>{
+
+  dispatch(deleteQuestion(id,navigate));
+
+}
+
   return (
     <div className='question-details-page'>
       {
@@ -263,11 +284,17 @@ setAnswer("");
                         </div>
                         <div className="question-action-user">
                           <div>
-                            <button className=" action-btn" type="button">Share</button>
-                            <button className=" action-btn" type="button">Delete</button>
+                            <button className=" action-btn" type="button" onClick={handleShare}>Share</button>
+                               {
+                                (question.userId === User?.result?._id)&&  <button className=" action-btn" type="button" onClick={()=>handleDeleteQuestion(id)}>Delete</button>
+
+                               }
+
+
+                           
                           </div>
                           <div>
-                            <p>asked {question.askedOn}</p>
+                            <p>asked {moment(question.askedOn).fromNow()}</p>
 
                             <Link to={`/User/${question.userId}`} className='user-link' style={{ color: '#0086d8' }}>
                               <Avatar
@@ -289,7 +316,7 @@ setAnswer("");
                     {question.noOfAnswer !== 0 && (
                       <section>
                         <h3>{question.noOfAnswer} answers</h3>
-                        <DisplayAnswer key={question.id} question={question} />
+                        <DisplayAnswer key={question.id} question={question}  handleShare={handleShare} />
                       </section>
 
                     )}
