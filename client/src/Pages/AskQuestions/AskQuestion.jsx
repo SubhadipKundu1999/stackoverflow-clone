@@ -1,14 +1,16 @@
 import React from 'react'
 import "./AskQuestion.css"
-import { useState } from "react";
+import { useState,useRef, useMemo} from "react";
 import { useDispatch, useSelector } from "react-redux";
+import JoditEditor from 'jodit-react';
 import { useNavigate } from "react-router-dom"
 import { askQuestion } from '../../actions/question';
 
 
 const AskQuestion = () => {
+  const editor = useRef(null);
+	const [questionBody, setQuestionBody] = useState('');
   const [questionTitle, setQuestionTitle] = useState('')
-  const [questionBody, setQuestionBody] = useState('')
   const [questionTags, setQuestionTags] = useState('')
 
   const dispatch = useDispatch();
@@ -16,6 +18,7 @@ const AskQuestion = () => {
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
+    
     e.preventDefault();
 
   
@@ -23,11 +26,7 @@ const AskQuestion = () => {
     
   }
 
-  const handleEnter = (e) => {
-    if (e.key === 'Enter') {
-      setQuestionBody(questionBody + "\n");
-    }
-  }
+
 
   return (
     <div className='ask-ques'>
@@ -46,14 +45,22 @@ const AskQuestion = () => {
             </label>
 
 
-
             <label htmlFor="ask-ques-body" className='ask-ques-container-3'>
               <h4>Body</h4>
               <p>Include all the information someone would need to answer your question</p>
-              <textarea name="ask-ques-body" id="ask-ques-body" cols="30" rows="10"
+
+              {/* <textarea name="ask-ques-body" id="ask-ques-body" cols="30" rows="10"
                 value={questionBody} onChange={(e) => { setQuestionBody(e.target.value) }}
                 onKeyPress={handleEnter}
-              ></textarea>
+              ></textarea> */}
+
+              <JoditEditor
+			ref={editor}
+			value={questionBody}
+      id="ask-ques-body"
+			tabIndex={1} // tabIndex of textarea
+			onChange={(e) => { setQuestionBody(e)}}		/>
+
             </label>
 
 

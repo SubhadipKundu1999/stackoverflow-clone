@@ -11,7 +11,8 @@ switch (action.type) {
     case "FETCH_ANSWER":
         return {...state}
    
-
+    case "DELETE_ANSWER":
+        return {...state}
     case "DELETE_QUESTION":
         return{...state};
     

@@ -1,16 +1,21 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import moment from 'moment';
+import JoditEditor from 'jodit-react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import copy from "copy-to-clipboard"
+import parse from 'html-react-parser';
 
 import sortUp from "../../assets/sort-up.svg";
 import sortDown from "../../assets/sort-down.svg";
-import { Link } from 'react-router-dom';
 import Avatar from '../../Components/Avatar/Avatar';
 import DisplayAnswer from './DisplayAnswer';
-import { useDispatch, useSelector } from 'react-redux';
 import { postAnswer, deleteQuestion } from "../../actions/question.js"
+
 const QuesionsDetails = () => {
+  // for JoditEditor
+  const editor = useRef(null);
   const [answer, setAnswer] = useState('');
   const User = useSelector((state) => state.currentUserReducer);
   let questionList = useSelector((state) => state.questionsReducer)
@@ -18,7 +23,11 @@ const QuesionsDetails = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch();
   const location = useLocation();
+
+  //for post Answer
   const handlepostAnswer = (e, answerLength) => {
+
+
     e.preventDefault();
     if (User === null) {
       alert("Login or Signup to answer a question");
@@ -33,22 +42,23 @@ const QuesionsDetails = () => {
         noOfAnswer: answerLength + 1,
         answerBody: answer,
         userAnswered: User.result.name,
-        userId:User.result._id
+        userId: User.result._id
       }))
 
       setAnswer("");
     }
 
   }
- const url = "http://localhost:3000"
+  const { id } = useParams()
 
-  const handleShare=()=>
-  {
-
-    copy(url+location.pathname);
-    alert(url+location.pathname);
+  // handle share functionality
+  const handleShare = () => {
+    const url = "http://localhost:3000"
+    copy(url + location.pathname);
+    alert(url + location.pathname);
 
   }
+
   // var questionList = [
   //   {
   //     id: 0,
@@ -245,13 +255,15 @@ const QuesionsDetails = () => {
   //     }]
   //   }
   // ];
-  const { id } = useParams()
 
-const handleDeleteQuestion=(id)=>{
 
-  dispatch(deleteQuestion(id,navigate));
 
-}
+
+  // handle  Delete question
+  const handleDeleteQuestion = (id) => {
+    dispatch(deleteQuestion(id, navigate));
+  }
+
 
   return (
     <div className='question-details-page'>
@@ -267,15 +279,15 @@ const handleDeleteQuestion=(id)=>{
                     <h1>{question.questionTitle}</h1>
                     <section className="question-details-container-2">
                       <div className="question-votes">
-                        <img src={sortUp} alt="" style={{ width: '20px' }} />
+                        <img src={sortUp} alt="" style={{ width: '20px' }}/>
                         <p>{question.upVotes.length - question.downVotes.length}</p>
-                        <img src={sortDown} alt="" style={{ width: '20px' }} />
+                        <img src={sortDown} alt="" style={{ width: '20px' }}/>
 
                       </div>
                       <div className="questions-other-details">
                         <p className="question-body">
-                          {question.questionBody}
-
+                          {/* < QuestionsDetails body={question.questionBody} /> */}
+                          {parse(question.questionBody)}
                         </p>
                         <div className="widget-tags-div-1">
                           {question.questionTags.map((tag) => (
@@ -285,13 +297,11 @@ const handleDeleteQuestion=(id)=>{
                         <div className="question-action-user">
                           <div>
                             <button className=" action-btn" type="button" onClick={handleShare}>Share</button>
-                               {
-                                (question.userId === User?.result?._id)&&  <button className=" action-btn" type="button" onClick={()=>handleDeleteQuestion(id)}>Delete</button>
+                            {
+                              (question.userId === User?.result?._id) && <button className=" action-btn" type="button" onClick={() => handleDeleteQuestion(id)}>Delete</button>
 
-                               }
+                            }
 
-
-                           
                           </div>
                           <div>
                             <p>asked {moment(question.askedOn).fromNow()}</p>
@@ -316,16 +326,28 @@ const handleDeleteQuestion=(id)=>{
                     {question.noOfAnswer !== 0 && (
                       <section>
                         <h3>{question.noOfAnswer} answers</h3>
-                        <DisplayAnswer key={question.id} question={question}  handleShare={handleShare} />
+                        <DisplayAnswer key={question.id} question={question} handleShare={handleShare} />
                       </section>
 
                     )}
                     <section>
                       <h3>Your Answer</h3>
                       <form onSubmit={(e) => { handlepostAnswer(e, question.answer.length) }}>
-                        <textarea name="answer" id="answer-text-area" value={answer} onChange={(e) => setAnswer(e.target.value)}></textarea>
+
+                        {/* Jodit Editor */}
+                        <JoditEditor
+                          id="answer-text-area"
+                          ref={editor}
+                          value={answer}
+                          style={{ maxHeight: '600px' }}
+
+                          tabIndex={1} // tabIndex of textarea
+                          onChange={(e) => { setAnswer(e) }} />
+
                         <input className="post-btn" type="submit" value="Post Your Answer" />
                       </form >
+
+
                       <p>Browse other Question tagged
                         {question.questionTags.map((tag) => (
                           <Link to="/Tags" key={tag} className='ans-tags'>{tag}</Link>
@@ -350,3 +372,9 @@ const handleDeleteQuestion=(id)=>{
 }
 
 export default QuesionsDetails
+
+
+
+
+
+

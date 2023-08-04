@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 
- export const connect=()=> {
+ export const  connect= async()=> {
 
  mongoose.set('strictQuery', true);
 
@@ -10,5 +10,5 @@ import mongoose from "mongoose";
             {
              useNewUrlParser: true,
              useUnifiedTopology: true 
-            });
+            }).catch((error)=>{error});
 }
