@@ -12,5 +12,6 @@ const Api = axios.create({
   export const postAnswer =(id,noOfAnswer,answerBody, userAnswered,userId) => Api.patch( `/answer/post/${id}` , {noOfAnswer,answerBody, userAnswered,userId}) ; 
   export const deleteQuestion=(id)=> Api.delete(`/questions/delete/${id}`,id);
   export const deleteAnswer=(id, answerId,noOfAnswer)=>Api.patch(`/answer/delete/${id}`,{answerId,noOfAnswer});
-  export const voteQuestion = (id, value, userId)=> Api.patch(`/questions/vote/${id}`, {value, userId});
+  export const voteQuestion = (id,userId, value) =>
+  Api.patch(`/questions/vote/${id}`, { userId,value });
   

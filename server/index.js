@@ -15,9 +15,7 @@ app.use(cors());
 
 const port =process.env.PORT || 5000
 console.log("working");
-
 app.get("/",(req,res)=>{
-
     res.send("hello from browser")
 })
 

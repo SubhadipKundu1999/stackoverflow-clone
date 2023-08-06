@@ -11,9 +11,11 @@ import sortUp from "../../assets/sort-up.svg";
 import sortDown from "../../assets/sort-down.svg";
 import Avatar from '../../Components/Avatar/Avatar';
 import DisplayAnswer from './DisplayAnswer';
-import { postAnswer, deleteQuestion, votefunction } from "../../actions/question.js"
+import { postAnswer, deleteQuestion, voteQuestion } from "../../actions/question.js"
 
 const QuesionsDetails = () => {
+  const Navigate=useNavigate()
+
   const User = useSelector((state) => state.currentUserReducer);
 
   // for JoditEditor
@@ -61,28 +63,32 @@ const QuesionsDetails = () => {
   }
 
 
-
-
   // handle  Delete question
   const handleDeleteQuestion = (id) => {
-    dispatch(deleteQuestion(id, navigate));
+    dispatch(deleteQuestion(id ,navigate));
   }
 
-
-
-
-  // handle Up Vote
-  const handleUpvote = (question) => {
-    console.log(question._id, 'upvote', User?.result?._id)
-    dispatch(votefunction( question._id, 'upvote', User?.result?._id ))
+// handle vote system
+const handleUpVote = () => {
+  console.log(User?.result?._id); 
+  if (User === null) {
+    alert("Login or Signup to up vote a question");
+    Navigate("/Auth");
+  } else {
+  
+    dispatch(voteQuestion(id,User?.result?._id , "upVote"));
   }
-  // handle Down Vote 
+};
 
-  const handleDownvote = (question) => {
-    
-    dispatch(votefunction( question._id, 'downvote', User?.result?._id ))
-
+const handleDownVote = () => {
+  if (User === null) {
+    alert("Login or Signup to down vote a question");
+    Navigate("/Auth");
+  } else {
+    dispatch(voteQuestion(id,User?.result?._id, "downVote"));
   }
+};
+
 
   return (
     <div className='question-details-page'>
@@ -98,9 +104,9 @@ const QuesionsDetails = () => {
                     <h1>{question.questionTitle}</h1>
                     <section className="question-details-container-2">
                       <div className="question-votes">
-                        <img src={sortUp} alt="" style={{ width: '20px' }} onClick={() => handleUpvote(question)} />
+                        <img src={sortUp} alt="" style={{ width: '20px' }}    onClick={handleUpVote} />
                         <p>{question.upVotes.length - question.downVotes.length}</p>
-                        <img src={sortDown} alt="" style={{ width: '20px' }} onClick={() => handleDownvote(question)} />
+                        <img src={sortDown} alt="" style={{ width: '20px' }}   onClick={handleDownVote} />
 
                       </div>
                       <div className="questions-other-details">

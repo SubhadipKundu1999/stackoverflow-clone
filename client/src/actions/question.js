@@ -69,18 +69,12 @@ export const deleteAnswer =( id,answerId,noOfAnswer)=>async(dispatch)=> {
     }
 }
 
-
-export const votefunction=(id, value, userId)=> async(dispatch)=>{
-    console.log(id, value, userId);
-    try{
-       
-        const {data} = await api.voteQuestion(id,value,userId)
-      await  dispatch(getQuestions());
+export const voteQuestion = (id,userId, value) => async (dispatch) => {
+    console.log(userId);
+    try {
+      await api.voteQuestion(id,userId, value);
+      dispatch(getQuestions());
+    } catch (error) {
+      console.log(error);
     }
-
-    catch(error){
-
- console.log(error);
-
-    }
-}
+  };
