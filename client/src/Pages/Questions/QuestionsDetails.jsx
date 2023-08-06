@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import moment from 'moment';
 import JoditEditor from 'jodit-react';
@@ -11,13 +11,14 @@ import sortUp from "../../assets/sort-up.svg";
 import sortDown from "../../assets/sort-down.svg";
 import Avatar from '../../Components/Avatar/Avatar';
 import DisplayAnswer from './DisplayAnswer';
-import { postAnswer, deleteQuestion } from "../../actions/question.js"
+import { postAnswer, deleteQuestion, votefunction } from "../../actions/question.js"
 
 const QuesionsDetails = () => {
+  const User = useSelector((state) => state.currentUserReducer);
+
   // for JoditEditor
   const editor = useRef(null);
   const [answer, setAnswer] = useState('');
-  const User = useSelector((state) => state.currentUserReducer);
   let questionList = useSelector((state) => state.questionsReducer)
   questionList = questionList.data;
   const navigate = useNavigate()
@@ -59,203 +60,6 @@ const QuesionsDetails = () => {
 
   }
 
-  // var questionList = [
-  //   {
-  //     id: 0,
-  //     upVotes: 5,
-  //     downVotes: 1,
-  //     noOfAnswer: 2,
-  //     questionTitle: "What is a function?",
-  //     questionBody: "It mean to be",
-  //     questionTags: ["java", "node js", "react js", "mongoDb"],
-  //     userPosted: 'mano',
-  //     askOn: "jan 1",
-  //     userId: 1,
-  //     answer: [{
-  //       answerBody: "Answer",
-  //       userAnswered: "Kumar",
-  //       userId: 2,
-  //     }]
-  //   },
-  //   {
-  //     id: '1',
-  //     upVotes: 5,
-  //     downVotes: 1,
-  //     noOfAnswer: 2,
-  //     questionTitle: "What is a function?",
-  //     questionBody: "It mean to be",
-  //     questionTags: ["java", "nodejs", "reactjs", "mongoDb"],
-  //     userPosted: 'mano',
-  //     askOn: "jan 1",
-  //     userId: 2,
-  //     answer: [{
-  //       answerBody: "Unlock Your Programming Potential: Join Our FREE 3-Day Workshop on How to Become an Expert in Object Oriented Programming for Fresh Graduates/Students on YouTube Live, Presented by VibrantMinds!Dear Students",
-  //       userAnswered: "Kumar",
-  //       userId: 2,
-  //     }]
-  //   },
-  //   {
-  //     id: 2,
-  //     upVotes: 5,
-  //     downVotes: 2,
-  //     noOfAnswer: 2,
-  //     questionTitle: "What is a function?",
-  //     questionBody: "It mean to be",
-  //     questionTags: ["java", "node js", "react js", "mongoDb"],
-  //     userPosted: 'mano',
-  //     askOn: "jan 1",
-  //     answer: [{
-  //       answerBody: "Answer",
-  //       userAnswered: "Kumar",
-  //       userId: 2,
-  //     }]
-  //   },
-  //   {
-  //     id: 3,
-  //     upVotes: 3,
-  //     downVotes: 5,
-  //     noOfAnswer: 2,
-  //     questionTitle: "What is a function?",
-  //     questionBody: "It mean to be",
-  //     questionTags: ["java", "node js", "react js", "mongoDb"],
-  //     userPosted: 'mano',
-  //     askOn: "jan 1",
-  //     answer: [{
-  //       answerBody: "Answer",
-  //       userAnswered: "Kumar",
-  //       userId: 2,
-  //     }]
-  //   },
-  //   {
-  //     id: 4,
-  //     upVotes: 6,
-  //     downVotes: 5,
-  //     noOfAnswer: 2,
-  //     questionTitle: "What is a function  jh jj jjnjn jkn jjjjjjjjjjjjjjjjjhhhhk jj kjj j ",
-  //     questionBody: "It mean to be",
-  //     questionTags: ["java", "node js", "react js", "mongoDb"],
-  //     userPosted: 'mano',
-  //     askOn: "jan 1",
-  //     answer: [{
-  //       answerBody: "Answer",
-  //       userAnswered: "Kumar",
-  //       userId: 2,
-  //     }]
-  //   },
-  //   {
-  //     id: 5,
-  //     upVotes: 15,
-  //     downVotes: 5,
-  //     noOfAnswer: 2,
-  //     questionTitle: "What is a function?",
-  //     questionBody: "It mean to be",
-  //     questionTags: ["java", "node js", "react js", "mongoDb"],
-  //     userPosted: 'mano',
-  //     askOn: "jan 1",
-  //     answer: [{
-  //       answerBody: "Answer",
-  //       userAnswered: "Kumar",
-  //       userId: 2,
-  //     }]
-  //   },
-  //   {
-  //     id: 6,
-  //     upVotes: 15,
-  //     downVotes: 5,
-  //     noOfAnswer: 2,
-  //     questionTitle: "What is a function?",
-  //     questionBody: "It mean to be",
-  //     questionTags: ["java", "node js", "react js", "mongoDb"],
-  //     userPosted: 'mano',
-  //     askOn: "jan 1",
-  //     answer: [{
-  //       answerBody: "Answer",
-  //       userAnswered: "Kumar",
-  //       userId: 2,
-  //     }]
-  //   },
-  //   {
-  //     id: 7,
-  //     upVotes: 15,
-  //     downVotes: 7,
-  //     noOfAnswer: 2,
-  //     questionTitle: "What is a function?",
-  //     questionBody: "It mean to be",
-  //     questionTags: ["java", "node js", "react js", "mongoDb"],
-  //     userPosted: 'mano',
-  //     askOn: "jan 1",
-  //     answer: [{
-  //       answerBody: "Answer",
-  //       userAnswered: "Kumar",
-  //       userId: 2,
-  //     }]
-  //   },
-  //   {
-  //     id: 8,
-  //     upVotes: 50,
-  //     downVotes: 15,
-  //     noOfAnswer: 2,
-  //     questionTitle: "What is a function?",
-  //     questionBody: "It mean to be",
-  //     questionTags: ["java", "nodejs", "reactjs", "mongoDb"],
-  //     userPosted: 'mano',
-  //     askOn: "jan 1",
-  //     answer: [{
-  //       answerBody: "Answer",
-  //       userAnswered: "Kumar",
-  //       userId: 2,
-  //     }]
-  //   },
-  //   {
-  //     id: 9,
-  //     upVotes: 15,
-  //     downVotes: 5,
-  //     noOfAnswer: 2,
-  //     questionTitle: "What is a function?",
-  //     questionBody: "It mean to be",
-  //     questionTags: ["java", "node js", "react js", "mongoDb"],
-  //     userPosted: 'mano',
-  //     askOn: "jan 1",
-  //     answer: [{
-  //       answerBody: "Answer",
-  //       userAnswered: "Kumar",
-  //       userId: 2,
-  //     }]
-  //   },
-  //   {
-  //     id: 10,
-  //     upVotes: 15,
-  //     downVotes: 10,
-  //     noOfAnswer: 2,
-  //     questionTitle: "What is a function?",
-  //     questionBody: "It mean to be",
-  //     questionTags: ["java", "node js", "react js", "mongoDb"],
-  //     userPosted: 'mano',
-  //     askOn: "jan 1",
-  //     answer: [{
-  //       answerBody: "Answer",
-  //       userAnswered: "Kumar",
-  //       userId: 2,
-  //     }]
-  //   },
-  //   {
-  //     id: 12,
-  //     upVotes: 50,
-  //     downVotes: 25,
-  //     noOfAnswer: 2,
-  //     questionTitle: "What is a function?",
-  //     questionBody: "It mean to be",
-  //     questionTags: ["java", "node js", "react js", "mongoDb"],
-  //     userPosted: 'mano',
-  //     askOn: "jan 1",
-  //     answer: [{
-  //       answerBody: "Answer",
-  //       userAnswered: "Kumar",
-  //       userId: 2,
-  //     }]
-  //   }
-  // ];
-
 
 
 
@@ -264,6 +68,21 @@ const QuesionsDetails = () => {
     dispatch(deleteQuestion(id, navigate));
   }
 
+
+
+
+  // handle Up Vote
+  const handleUpvote = (question) => {
+    console.log(question._id, 'upvote', User?.result?._id)
+    dispatch(votefunction( question._id, 'upvote', User?.result?._id ))
+  }
+  // handle Down Vote 
+
+  const handleDownvote = (question) => {
+    
+    dispatch(votefunction( question._id, 'downvote', User?.result?._id ))
+
+  }
 
   return (
     <div className='question-details-page'>
@@ -279,9 +98,9 @@ const QuesionsDetails = () => {
                     <h1>{question.questionTitle}</h1>
                     <section className="question-details-container-2">
                       <div className="question-votes">
-                        <img src={sortUp} alt="" style={{ width: '20px' }}/>
+                        <img src={sortUp} alt="" style={{ width: '20px' }} onClick={() => handleUpvote(question)} />
                         <p>{question.upVotes.length - question.downVotes.length}</p>
-                        <img src={sortDown} alt="" style={{ width: '20px' }}/>
+                        <img src={sortDown} alt="" style={{ width: '20px' }} onClick={() => handleDownvote(question)} />
 
                       </div>
                       <div className="questions-other-details">
