@@ -1,12 +1,11 @@
 import Questions from "../model/questionModel.js";
 import mongoose from "mongoose";
 
-
-export const postAnswer= async (req,res)=>{
+export const postAnswer = async (req,res)=>{
     const {id:id} = req.params;
     const {noOfAnswer, answerBody, userAnswered,userId} = req.body;
 
-    if(!mongoose.Types.ObjectId.isValid(id)){
+    if(!mongoose.Types.ObjectId.isValid(id)){                
         res.status(404).json({message:"Question not valid"});
     }
     updateNoOfAnswer(id,noOfAnswer);

@@ -2,12 +2,12 @@ import * as api from "../api";
 
 export const askQuestion = (questionData, navigate) => async (dispatch) => {
 
-    console.log("questions data" , questionData);
+    // console.log("questions data" , questionData);
 
     try {
 
         const { data } = await api.postQuestion(questionData);
-        console.log(data);
+        // console.log(data);
         dispatch({ type: "POST_QUESTION", payload: data });
         await dispatch(getQuestions())
         navigate('/');

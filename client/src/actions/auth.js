@@ -18,9 +18,9 @@ console.log(error);
 export const login = (authData,navigate)=> async (dispatch)=>{
     try{
       const {data} = await api.logIn(authData);
+      console.log("sucessfull")  
+      navigate("/");
       dispatch({type:"Auth",data});
-      console.log("sucessfull")
-      navigate("/")
     }
     catch(error){
 console.log(error);

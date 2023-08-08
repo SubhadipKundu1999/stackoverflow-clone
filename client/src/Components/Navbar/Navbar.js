@@ -1,35 +1,51 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import logo from "../../assets/logo.png"
 import search from "../../assets/search-solid.svg"
 import Avatar from '../Avatar/Avatar'
-import {useSelector,useDispatch} from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import "./Navbar.css"
 import currentUserReducer from '../../reducers/currentUser'
-import {useEffect} from "react";
+import { useEffect } from "react";
 import setCurrentUser from '../../actions/setCurrentUser'
-
+import decode from 'jwt-decode';
 const Navbar = () => {
-
+ const Navigate=  useNavigate()
+ const User = useSelector((state) => state.currentUserReducer);
+  const dispatch = useDispatch()
+// logout
+const handleLogOut=()=>{
+  dispatch({type:"LOGOUT"});
+  Navigate('/');
+  dispatch(setCurrentUser(null));
+ 
+}
 
   //user details
 
-const dispatch = useDispatch()
 
 
-  useEffect(()=>{
+  useEffect(() => {
+    const token = User?.token;
+    if (token){
+      const decodeToken = decode(token);
+      console.log(decodeToken.exp);
+      if(decodeToken.exp*1000< new Date().getTime()){
+        handleLogOut();
+      }
+    }
     dispatch(setCurrentUser(JSON.parse(localStorage.getItem('Profile'))));
-    
-  },[dispatch])
+  }, [dispatch])
 
-  const user = useSelector((state)=>state.currentUserReducer);
-  console.log(user)
-   let first_letter="m"
-  if(user){
-   const user_name= user.result.name;
+
+  console.log(User)
+  let first_letter = "m";
+
+  if (User) {
+    const user_name = User.result.name;
     first_letter = user_name.charAt(0);
   }
- 
+
 
   return (
     <nav className='top-nav'>
@@ -52,11 +68,11 @@ const dispatch = useDispatch()
 
         </form>
 
-        {user == null ? <Link to="/Auth" className="nav-item nav-links"> Log In </Link> :  
-        <>  <Link to="/" className='' style={{ textDecoration: "none" ,color:"white", backgroundColor : "#009dff", width:'40px', height:"40px" ,borderRadius:"50%", textAlign:"center",fontSize:"28px", padding:"auto"}} >{first_letter}</Link>
-            <button className='nav-links nav-item'> Log Out</button>
-        </>
-          }
+        {User == null ? <Link to="/Auth" className="nav-item nav-links"> Log In </Link> :
+          <>  <Link to="/" className='' style={{ textDecoration: "none", color: "white", backgroundColor: "#009dff", width: '40px', height: "40px", borderRadius: "50%", textAlign: "center", fontSize: "28px", padding: "auto" }} >{first_letter}</Link>
+            <button className='nav-links nav-item' onClick={handleLogOut}> Log Out</button>
+          </>
+        }
 
       </div>
     </nav>

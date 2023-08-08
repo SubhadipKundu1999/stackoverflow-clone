@@ -5,9 +5,11 @@ import Navbar from './Components/Navbar/Navbar'
 import AllRoutes from "./AllRoutes"
 import { useDispatch } from "react-redux"
 import { getQuestions } from "./actions/question"
+import {getAllUsers} from "./actions/users"
 function App() {
   const dispatch= useDispatch();
   useEffect(()=>{
+   dispatch(getAllUsers());     
 dispatch(getQuestions())
   },[dispatch])
   return (

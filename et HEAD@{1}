@@ -1,0 +1,14 @@
+[33m051b577[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m)[m HEAD@{0}: reset: moving to HEAD^
+[33mefdd2e8[m HEAD@{1}: reset: moving to HEAD~
+[33m37c6ef8[m[33m ([m[1;31morigin/main[m[33m)[m HEAD@{2}: commit: vote question functionality ready
+[33mefdd2e8[m HEAD@{3}: commit: impliment vote question functionality
+[33m051b577[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m)[m HEAD@{4}: commit: impliment delete anwser and add JoditEditor
+[33m34443d2[m HEAD@{5}: commit: implemented delete question and share function
+[33mc847d71[m HEAD@{6}: commit: implimented post answer functionality
+[33mdbbe98f[m HEAD@{7}: Branch: renamed refs/heads/main to refs/heads/main
+[33mdbbe98f[m HEAD@{9}: commit: first commit
+[33m4b9bda7[m HEAD@{10}: commit: first commit
+[33m30225af[m[33m ([m[1;31mnnnnnnnn/main[m[33m)[m HEAD@{11}: commit: first commit
+[33mf85c620[m HEAD@{12}: reset: moving to HEAD~
+[33m154650a[m HEAD@{13}: commit: first commit
+[33mf85c620[m HEAD@{14}: commit (initial): first commit
