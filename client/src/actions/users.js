@@ -16,3 +16,16 @@ export const getAllUsers = () => async (dispatch) => {
     }
 
 }
+
+export const updateProfile=(id, data)=> async (dispatch)=>{
+console.log("hello");
+console.log("action", id, data)
+    try{    
+       await api.updateProfile( id, data);
+       dispatch(getAllUsers());
+
+    }
+    catch(err){
+        console.log(err);
+    }
+}

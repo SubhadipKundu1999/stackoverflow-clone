@@ -8,7 +8,8 @@ import { useSelector } from 'react-redux'
 const HomeMainbar = () => {
   const user = 1;
   const navigate=useNavigate()
-  let questionList = useSelector((state)=>state.questionsReducer);
+  
+  // let questionList = useSelector((state)=>state.questionsReducer);
   
  
   const checkAuth=()=>{
@@ -22,22 +23,23 @@ const HomeMainbar = () => {
   }
   const location = useLocation()
   return (
+
     <div className='main-bar'>
+    {/* {questionList.map} */}
       <div className="main-bar-header">
         {
-          location.pathname === '/' ? <h1>Top Questions</h1> : <h1>All Questions</h1>
+          location.pathname === '/' ? <h1 className="top-heading">Top Questions</h1> : <h1>All Questions</h1>
         }
         <button to="/AskQuestion" className='ask-btn' onClick={checkAuth}>Ask Question</button>
       </div>
       <div>
-        {
+        {/* {
           questionList.data == null ?
             <h1>Loading...</h1> :
             <>
-              <p> {questionList.data.length} questions</p>
-              <QuestionList questionlist={questionList.data} />
-            </>
-        }
+              {/* <p className='no-of-question'> {questionList.data.length} questions</p> */}
+    
+        <QuestionList  />
       </div>
 
     </div>

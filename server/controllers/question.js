@@ -91,3 +91,30 @@ export const voteQuestion = async (req, res) => {
 
 
   
+export const paginatedQuestions= async(req, res)=>{
+
+  const allQuestion = await Questions.find();
+  const page = parseInt(req.query.page);
+  const limit= parseInt(req.query.limit);
+  
+  const startIndex = (page-1) * limit ;
+  const lastIndex = (page) * limit;
+
+  const results ={};
+
+  results.totalQuestion=  allQuestion.length;
+  results.pageCount =Math.ceil(allQuestion.length/limit);
+
+  if(lastIndex< allQuestion.length){
+    results.next={
+      page:page+1
+    }
+  }
+  if(startIndex>0){
+    results.prev={
+      page:page-1
+    }
+  }
+ results.result = allQuestion.slice(startIndex, lastIndex);
+ res.json(results);
+}

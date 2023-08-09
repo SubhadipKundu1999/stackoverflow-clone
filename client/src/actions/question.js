@@ -31,6 +31,7 @@ export const getQuestions = () => async (dispatch) => {
 
 
 export const deleteQuestion=(id,navigate)=> async(dispatch)=>{
+    
     try{
       const {data}=  await api.deleteQuestion(id);
          dispatch({type:"DELETE_QUESTION", payload: data });
@@ -78,3 +79,18 @@ export const voteQuestion = (id,userId, value) => async (dispatch) => {
       console.log(error);
     }
   };
+
+export const getPaginatedQuestion = ( setPageCount,current, limit)=> async(dispatch)=>{
+    console.log("hello dear");
+    try{
+        const {data} = await api.getPaginatedQuestion(current, limit);
+        console.log(data, "userData");
+        setPageCount(data.pageCount);
+        dispatch({ type: "FETCH_ALL_QUESTIONS", payload: data.result });
+    }
+    catch(error){
+        console.log(error)
+    }
+
+}
+

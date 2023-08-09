@@ -9,7 +9,8 @@
 .question-row{
     display: flex;
     width: 100%; 
-     /* border: 1px solid red; */
+     border-bottom: 2px solid rgb(229, 229, 229);
+     /* box-shadow: 1px 1px 4px black; */
 }
 .question-col{
 
@@ -21,9 +22,11 @@
     align-items: center;
    
 }
+.answer-vote{
+    display: flex;
+}
 .question-col p{
-    line-height: 0;
-    padding: 0;
+      
     font-size: 14px;
 }
 .col-1, .col-2{
@@ -40,9 +43,92 @@
 .col-3 .inner-row{
     width: 100%;
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between; 
 }
 .question-time-user{
-    width: auto
+    width: auto;
+    color:#3d79cd;
+    text-align: right;
+
 }
 
+.question-title-link{
+    color:#3d79cd;
+    text-decoration: none;
+    font-weight: 500;
+}
+.question-list-page nav {
+    display: flex;
+    justify-content: center;
+}
+
+
+
+.pagination {
+  margin-bottom: 2rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  list-style-type: none;
+  padding: 0 5rem;
+}
+ .pagination  li a {
+    border-radius: 7px;
+    padding: 0.4rem 1rem;
+    border: gray 1px solid;
+    cursor: pointer;
+    text-decoration: none;
+  }
+ .pagination  li.previous a,
+ .pagination  li.next a,
+.pagination    li.break a {
+    border-color: transparent;
+  }
+ .pagination li.active a {
+    background-color: #f48225;
+    border-color: transparent;
+    color: white;
+    min-width: 32px;
+  }
+.pagination  li.disabled a {
+    color: grey;
+  }
+.pagination  li.disable,
+ .pagination li.disabled a {
+    cursor: default;
+  }
+      
+  
+  .set-limit{
+    /* width: 100%; */
+    float: right;
+  }
+  .set-limit input{
+    border: 1px solid #0366d6;
+  }
+
+.set-limit button{
+    border: 2px rgb(85, 85, 86) solid;
+    background-color: #E1ECF4;
+    border: 1px solid rgb(119, 119, 212);
+    padding: 1px 5px;
+    border-radius: 2px;
+    color: #123b59;
+}
+
+@media (max-width:1100px) {
+    .question-time-user{
+        width: 100%;
+    }
+}
+@media (max-width:700px) {
+ .answer-vote{
+    display: flex;
+    flex-direction: column;
+}
+.col-3{
+    width:calc(100% - 80px);
+}
+    
+}

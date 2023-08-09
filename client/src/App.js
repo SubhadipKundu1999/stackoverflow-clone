@@ -10,8 +10,10 @@ function App() {
   const dispatch= useDispatch();
   useEffect(()=>{
    dispatch(getAllUsers());     
-dispatch(getQuestions())
   },[dispatch])
+
+
+  
   return (
 <Router>
 <Navbar/>

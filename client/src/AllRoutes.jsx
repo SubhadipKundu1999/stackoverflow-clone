@@ -7,6 +7,7 @@ import AskQuestion from "./Pages/AskQuestions/AskQuestion";
 import DisplayQuestion from "./Pages/Questions/DisplayQuestion";
 import Tags from "./Pages/Tags/Tags";
 import Users from "./Pages/Users/Users";
+import UserProfile from "./Pages/UserProfile/UserProfile";
 // import QuesionsDetails from "./Pages/Questions/QuestionsDetails";
 const AllRoutes = ({ slideIn, handleSlideIn }) => {
   return (
@@ -19,6 +20,8 @@ const AllRoutes = ({ slideIn, handleSlideIn }) => {
     <Route path="/Questions/:id" element={<DisplayQuestion/>}/>
     <Route path ="/Tags" element={<Tags/>}/>
     <Route path="/Users/" element={<Users/>}></Route>
+    <Route path="/Users/:id" element={<UserProfile/>}></Route>
+
    </Routes>
 );
 };

@@ -23,4 +23,5 @@ Api.interceptors.request.use((req) => {
   export const deleteAnswer=(id, answerId,noOfAnswer)=>Api.patch(`/answer/delete/${id}`,{answerId,noOfAnswer});
   export const voteQuestion = (id,userId, value) => Api.patch(`/questions/vote/${id}`, { userId,value });
   export const getAllUsers = ()=>Api.get("/user/getAllUsers");
-  
+  export const updateProfile=(id, data)=> Api.patch(`user/update/${id}`,data);
+  export const getPaginatedQuestion=(current, limit) => Api.get(`/questions/paginatedQuestions?page=${current}&limit=${limit}`)

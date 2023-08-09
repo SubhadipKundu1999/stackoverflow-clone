@@ -1,14 +1,12 @@
 .left-sidebar{
-    /* position: absolute; */
-    width: 164px;
-    /* border: 1px solid black; */
-    box-sizing: border-box;
-    box-shadow: 0px 0px 1px 2px #b1acac;
-    transition: box-shadow 0.2s;
-    transform:translateZ(0);
-    /* height: auto; */
-    /* z-index: 300; */
-    /* display: none; */
+width:200px;
+height:100vh;
+margin-top: px;
+border-right:  1px rgb(172, 167, 167) solid;
+position: fixed;
+z-index: 1;
+background-color: #ffff;
+transition: ease 0.4s;
 }
 .side-nav{
     margin-top: 80px;
@@ -24,10 +22,18 @@
     padding: 0px 10px ;
     line-height: 0.5;
 }
-.active {
+.left-sidebar  .active{
     border-right: 3px solid #ef8236;
     background-color:#e8e8e8;
     color:#000;
     font-weight: bold;
-   
 }
+
+@media screen and (max-width: 700px) {
+
+    .left-sidebar {
+      position: absolute;
+      
+      z-index: 0;
+    }
+  }
