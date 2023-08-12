@@ -8,7 +8,9 @@ const userSchema = mongoose.Schema(
         password:{type:String, required:true},
         about:{type:String },
         tags:{type:[String]},
-        joinedOn:{type:Date, default:Date.now}
+        joinedOn:{type:Date, default:Date.now},
+        color:{type:String, default:"#009dff"}
+        
     }
 )
 

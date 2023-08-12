@@ -1,12 +1,14 @@
 .left-sidebar{
+  
 width:200px;
 height:100vh;
 margin-top: px;
 border-right:  1px rgb(172, 167, 167) solid;
-position: fixed;
+position:static;
 z-index: 1;
 background-color: #ffff;
 transition: ease 0.4s;
+
 }
 .side-nav{
     margin-top: 80px;
@@ -33,7 +35,17 @@ transition: ease 0.4s;
 
     .left-sidebar {
       position: absolute;
-      
-      z-index: 0;
+      z-index: 2;
     }
   }
+
+
+  /* @media screen and (min-width: 700px) {
+
+    .left-sidebar {
+      position: relative;
+      left:0px;
+      
+      z-index: 2;
+    }
+  } */

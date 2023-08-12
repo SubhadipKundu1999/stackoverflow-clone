@@ -1,31 +1,30 @@
-import React, { useState } from 'react'
-import { Link, useLocation, useNavigate } from 'react-router-dom'
+import React from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
+
 import QuestionList from '../QuestionList'
 import './HomeMainbar.css'
 import { useSelector } from 'react-redux'
 
 
 const HomeMainbar = () => {
-  const user = 1;
-  const navigate=useNavigate()
-  
-  // let questionList = useSelector((state)=>state.questionsReducer);
-  
- 
-  const checkAuth=()=>{
-    if(user===null){
+
+  const CurrentUser = useSelector((state) => state.currentUserReducer);
+  const navigate = useNavigate()
+  const location = useLocation()
+
+  const checkAuth = () => {
+    if (CurrentUser === null) {
       alert("login of signup to ask a question");
       navigate('/Auth');
     }
-    else{
+    else {
       navigate('/AskQuestion')
     }
   }
-  const location = useLocation()
+
   return (
 
     <div className='main-bar'>
-    {/* {questionList.map} */}
       <div className="main-bar-header">
         {
           location.pathname === '/' ? <h1 className="top-heading">Top Questions</h1> : <h1>All Questions</h1>
@@ -33,13 +32,7 @@ const HomeMainbar = () => {
         <button to="/AskQuestion" className='ask-btn' onClick={checkAuth}>Ask Question</button>
       </div>
       <div>
-        {/* {
-          questionList.data == null ?
-            <h1>Loading...</h1> :
-            <>
-              {/* <p className='no-of-question'> {questionList.data.length} questions</p> */}
-    
-        <QuestionList  />
+        <QuestionList />
       </div>
 
     </div>

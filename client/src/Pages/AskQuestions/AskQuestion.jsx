@@ -1,9 +1,9 @@
-import React from 'react'
-import "./AskQuestion.css"
-import { useState, useRef, useMemo } from "react";
+import React, { useState, useRef, useEffect } from 'react'
 import { useDispatch, useSelector } from "react-redux";
-import JoditEditor from 'jodit-react';
 import { useNavigate } from "react-router-dom"
+import JoditEditor from 'jodit-react';
+
+import "./AskQuestion.css"
 import { askQuestion } from '../../actions/question';
 import doubt from "../../assets/doubt.png"
 
@@ -17,7 +17,12 @@ const AskQuestion = () => {
   const dispatch = useDispatch();
   const User = useSelector((state) => (state.currentUserReducer));
   const navigate = useNavigate();
-
+useEffect(()=>{
+if(!User){
+  navigate("/auth")
+}
+},
+)
   const handleSubmit = (e) => {
 
     e.preventDefault();
@@ -39,7 +44,7 @@ const AskQuestion = () => {
       </div>
       <div className="ask-ques-container-1">
 
-      {/* instruction */}
+        {/* instruction */}
         <div className="good-question-details">
           <h2>Writing a good question</h2>
           <p>You’re ready to ask a programming-related question and this form will help guide you through the process.</p>
@@ -54,11 +59,12 @@ const AskQuestion = () => {
           </ul>
         </div>
 
-{/* ask question form */}
+
+        {/* ask question form */}
         <form className="ask-ques-form" onSubmit={handleSubmit}>
           <div className="ask-ques-container-2">
             <label htmlFor="ask-ques-title" className='ask-ques-container-3'>
-             
+
               <h4>Title</h4>
               <p>Be specific and imagine you’re asking a question to another person</p>
               <input type="text" id="ask-ques-title" name="ask-ques-title"
@@ -70,7 +76,8 @@ const AskQuestion = () => {
             <label htmlFor="ask-ques-body" className='ask-ques-container-3'>
               <h4>Body</h4>
               <p>Include all the information someone would need to answer your question</p>
-             
+
+
               {/* jodit Editor */}
               <JoditEditor
                 ref={editor}

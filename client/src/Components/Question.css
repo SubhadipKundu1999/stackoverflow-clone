@@ -1,5 +1,5 @@
 .question-list{
-    background-color:#fdf7e2 ;
+    /* background-color:#fdf7e2 ; */
     display:flex;
     flex-direction: column;
     justify-content: center;
@@ -71,7 +71,7 @@
   flex-direction: row;
   justify-content: space-between;
   list-style-type: none;
-  padding: 0 5rem;
+  /* rem; */
 }
  .pagination  li a {
     border-radius: 7px;
@@ -101,8 +101,9 @@
       
   
   .set-limit{
-    /* width: 100%; */
-    float: right;
+    /* float: left; */
+
+
   }
   .set-limit input{
     border: 1px solid #0366d6;

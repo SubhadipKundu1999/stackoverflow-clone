@@ -13,7 +13,8 @@ export const getAllUsers = async (req, res) =>{
                             email: user.email,
                             about:user.about,
                             tags:user.tags,
-                            joinedOn: user.joinedOn })
+                            joinedOn: user.joinedOn ,
+                            color:user.color})
        
 
     }) 
@@ -31,15 +32,15 @@ export const getAllUsers = async (req, res) =>{
 export const updateProfile= async (req,res)=>{
     const {id:_id} = req.params;
     console.log(_id);
-    const {name, about, tags}= req.body
-    console.log(name); 
+    const {name, about, tags, color}= req.body
+    console.log(color); 
 
  if (!mongoose.Types.ObjectId.isValid(_id)) {
     return res.status(404).send("user unavailable...");
   }
     try{
 
-        const updateProfile = await Users.findByIdAndUpdate(_id, {$set:{'name': name, 'about':about, 'tags':tags}},{new:true});
+        const updateProfile = await Users.findByIdAndUpdate(_id, {$set:{'name': name, 'about':about, 'tags':tags, color:color}},{new:true});
         res.status(200).json({updateProfile});
     }
     catch(error){

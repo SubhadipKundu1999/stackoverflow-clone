@@ -1,0 +1,16 @@
+.User-Skeleton {
+    width: calc(100vw - 200px);
+    padding: 30px 0px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+    flex-direction: row;
+}
+
+
+      
+@media (max-width:760px) {
+    .User-Skeleton {
+        width: 100vw
+    }
+}

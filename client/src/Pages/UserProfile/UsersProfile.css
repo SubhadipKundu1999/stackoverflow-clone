@@ -1,14 +1,19 @@
+
+.home-container-2{
+  padding: 20px;
+}
 .user-details-container {
   width: 100%;
   margin-top: 50px;
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
+
 }
 
 .user-details {
   display: flex;
-  align-items: flex-start;
+  align-items:flex-start;
 }
 
 .user-name {
@@ -78,4 +83,13 @@
   border: none;
   margin-left: 10px;
   cursor: pointer;
+}
+@media (max-width:760px) {
+  .edit-profile-form label input, .edit-profile-form label textarea {
+    width: 100%;
+}
+.user-details {
+  display: flex;
+  align-items: center;
+}
 }

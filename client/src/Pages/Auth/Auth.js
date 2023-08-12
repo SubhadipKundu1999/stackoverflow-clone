@@ -2,10 +2,10 @@ import React, { useState } from 'react'
 import icon from "../../assets/icon.png"
 import AboutAuth from './AboutAuth';
 import "./Auth.css"
-import {signup,login} from "../../actions/auth"
+import { signup, login } from "../../actions/auth"
 import { useDispatch } from 'react-redux';
 
-import {NavLink, useNavigate} from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 
 
 const Auth = () => {
@@ -15,9 +15,8 @@ const Auth = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('')
-
-
-  const dispatch= useDispatch();
+  const [error, setError] = useState('')
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
 
@@ -39,9 +38,9 @@ const Auth = () => {
       if (!name) {
         alert("Enter a name to continue");
       }
-      dispatch(signup({ name, email, password }, navigate));
+      dispatch(signup({ name, email, password }, setError, navigate));
     } else {
-      dispatch(login({ email, password }, navigate));
+      dispatch(login({ email, password }, setError, navigate));
     }
   };
 
@@ -60,7 +59,7 @@ const Auth = () => {
             <label htmlFor="name">
               <h4>Display Name</h4>
               <input type="text" name="name" id="name" value={name} onChange={(e) => setName(e.target.value)} />
-            </label> : "" }
+            </label> : ""}
 
           <label htmlFor=""></label>
           <label htmlFor="Email">
@@ -95,6 +94,7 @@ const Auth = () => {
 
           <button type="button" className='handle-switch-btn' onClick={handleSwitchBtn}>{isSignUp ? "log In" : "sign Up"}</button>
         </p>
+        {error && <p className='error-message'>{error}</p>}
       </div>
     </section>
   )

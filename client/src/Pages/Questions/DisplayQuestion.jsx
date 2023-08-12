@@ -1,8 +1,10 @@
 import React from 'react'
+
 import QuestionsDetails from './QuestionsDetails'
 import LeftSidebar from '../../Components/LeftSidebar/LeftSidebar'
 import RightSidebar from '../../Components/RightSidebar/RightSidebar'
 import  "./QuestionsDetails.css" 
+
 const DisplayQuestion = () => {
   return (
     <div>

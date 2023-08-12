@@ -10,11 +10,13 @@ import Avatar from "../../Components/Avatar/Avatar";
 import EditProfileForm from "./EditProfileForm";
 import ProfileBio from "./ProfileBio";
 import "./UsersProfile.css";
+import Skeleton from "react-loading-skeleton";
 
 const UserProfile = () => {
   const { id } = useParams();
   const users = useSelector((state) => state.usersReducer);
   const currentProfile = users.filter((user) => user._id === id)[0];
+  const color = currentProfile?.color;
   const currentUser = useSelector((state) => state.currentUserReducer);
   const [Switch, setSwitch] = useState(false);
 
@@ -22,20 +24,27 @@ const UserProfile = () => {
     <div className="home-container-1">
       <LeftSidebar />
       <div className="home-container-2">
-        <section>
+        <section style={{ padding: "20px" }}>
           <div className="user-details-container">
             <div className="user-details">
-              <Avatar
-                backgroundColor="purple"
+              {currentProfile ? (<Avatar
+                backgroundColor={`${color}` || "#009dff"}
                 color="white"
                 fontSize="50px"
                 px="40px"
                 py="30px"
               >
                 {currentProfile?.name.charAt(0).toUpperCase()}
-              </Avatar>
+              </Avatar>) :
+                (
+                  <Skeleton width={"120px"} height={"120px"}></Skeleton>
+                )
+              }
+
               <div className="user-name">
-                <h1>{currentProfile?.name}</h1>
+                {currentProfile ? <h1>{currentProfile?.name}</h1> : <Skeleton width={"120px"} height={"40px"} style={{ marginTop: "20px" }}>
+                </Skeleton>
+                }
                 <p>
                   <FontAwesomeIcon icon={faBirthdayCake} /> Joined{" "}
                   {moment(currentProfile?.joinedOn).fromNow()}

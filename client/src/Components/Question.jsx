@@ -1,14 +1,15 @@
 import React from 'react'
 import moment from "moment"
 import { Link } from 'react-router-dom'
-
 import '../App.css'
 import './Question.css'
 import { AiFillEye } from "react-icons/ai";
 
 const Question = ({ question }) => {
   return (
-    <div class="question-row" style={{ backgroundColor: (question.noOfAnswer === 0) && "#ffff" }} >
+    <>
+
+    <div className="question-row" style={{ backgroundColor: (question.noOfAnswer === 0) && "#ffff" }} >
      <div className="answer-vote"> <div className="question-col col-1">
         <p> {question.upVotes.length - question.downVotes.length} </p>
         <p> votes </p>
@@ -46,7 +47,12 @@ const Question = ({ question }) => {
 
 
     </div>
+
+
+  </>
   )
+
 }
+
 
 export default Question

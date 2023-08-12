@@ -1,31 +1,31 @@
 
 import * as api from "../api";
 
+
+
+// get All Questions
 export const getAllUsers = () => async (dispatch) => {
-
-
     try {
         const { data } = await api.getAllUsers();
-        // console.log(data);
         dispatch({ type: "FETCH_ALL_USER", payLoad: data });
 
     }
     catch (error) {
         console.log(error);
-
     }
 
 }
 
-export const updateProfile=(id, data)=> async (dispatch)=>{
-console.log("hello");
-console.log("action", id, data)
-    try{    
-       await api.updateProfile( id, data);
-       dispatch(getAllUsers());
+
+// for Update profile
+export const updateProfile = (id, data) => async (dispatch) => {
+
+    try {
+        await api.updateProfile(id, data);
+        dispatch(getAllUsers());
 
     }
-    catch(err){
+    catch (err) {
         console.log(err);
     }
 }

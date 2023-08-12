@@ -24,7 +24,7 @@ export const postAnswer = async (req,res)=>{
 
 export const deleteAnswer=async (req,res)=>{
     const {id:id} = req.params;
-    console.log(id);
+  
     const {answerId, noOfAnswer }= req.body
     if(!mongoose.Types.ObjectId.isValid(id)){
         res.status(404).json({message:"Question not valid"});

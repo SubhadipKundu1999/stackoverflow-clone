@@ -3,11 +3,13 @@ import { Link } from "react-router-dom";
 
 import "./Users.css";
 
+
 const User = ({ user }) => {
   return (
-    <Link to={`/Users/${user._id}`} className="user-profile-link">
-      <h3>{user.name.charAt(0).toUpperCase()}</h3>
-      <h5>{user.name}</h5>
+
+    <Link to={ `/Users/${user._id}` } className="user-profile-link">
+     <div style={{backgroundColor:`${user.color}` || "#009dff"}} ><p>{user.name.charAt(0).toUpperCase()}</p></div>
+     <div> <h4 font>{user.name}</h4></div>
     </Link>
   );
 };

@@ -6,32 +6,40 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import copy from "copy-to-clipboard"
 import parse from 'html-react-parser';
+import { BiSolidUpArrow,BiSolidDownArrow } from "react-icons/bi";
 
-import sortUp from "../../assets/sort-up.svg";
-import sortDown from "../../assets/sort-down.svg";
+
 import Avatar from '../../Components/Avatar/Avatar';
 import DisplayAnswer from './DisplayAnswer';
-import { postAnswer, deleteQuestion, voteQuestion } from "../../actions/question.js"
+import { postAnswer, deleteQuestion, voteQuestion, getQuestions } from "../../actions/question.js"
+
 
 const QuesionsDetails = () => {
-  const Navigate=useNavigate()
+ 
+  const Navigate = useNavigate()
 
   const User = useSelector((state) => state.currentUserReducer);
 
   // for JoditEditor
   const editor = useRef(null);
   const [answer, setAnswer] = useState('');
+  useEffect(()=>{
+    
+  })
   let questionList = useSelector((state) => state.questionsReducer)
+  console.log(questionList)
   questionList = questionList.data;
   const navigate = useNavigate()
   const dispatch = useDispatch();
   const location = useLocation();
-
+useEffect(()=>{
+dispatch(getQuestions())
+},[])
   //for post Answer
   const handlepostAnswer = (e, answerLength) => {
 
-
     e.preventDefault();
+
     if (User === null) {
       alert("Login or Signup to answer a question");
       navigate('/Auth');
@@ -47,7 +55,6 @@ const QuesionsDetails = () => {
         userAnswered: User.result.name,
         userId: User.result._id
       }))
-
       setAnswer("");
     }
 
@@ -65,29 +72,28 @@ const QuesionsDetails = () => {
 
   // handle  Delete question
   const handleDeleteQuestion = (id) => {
-    dispatch(deleteQuestion(id ,navigate));
+    dispatch(deleteQuestion(id, navigate));
   }
 
-// handle vote system
-const handleUpVote = () => {
-  console.log(User?.result?._id); 
-  if (User === null) {
-    alert("Login or Signup to up vote a question");
-    Navigate("/Auth");
-  } else {
-  
-    dispatch(voteQuestion(id,User?.result?._id , "upVote"));
-  }
-};
+  // handle vote system
+  const handleUpVote = () => {
+    if (User === null) {
+      alert("Login or Signup to up vote a question");
+      Navigate("/Auth");
+    } else {
 
-const handleDownVote = () => {
-  if (User === null) {
-    alert("Login or Signup to down vote a question");
-    Navigate("/Auth");
-  } else {
-    dispatch(voteQuestion(id,User?.result?._id, "downVote"));
-  }
-};
+      dispatch(voteQuestion(id, User?.result?._id, "upVote"));
+    }
+  };
+
+  const handleDownVote = () => {
+    if (User === null) {
+      alert("Login or Signup to down vote a question");
+      Navigate("/Auth");
+    } else {
+      dispatch(voteQuestion(id, User?.result?._id, "downVote"));
+    }
+  };
 
 
   return (
@@ -99,21 +105,31 @@ const handleDownVote = () => {
             {
 
               questionList.filter(question => question._id === id).map((question) => (
+                
                 <div key={question._id}>
+               
                   <section className="question-details-container">
                     <h1>{question.questionTitle}</h1>
                     <section className="question-details-container-2">
-                      <div className="question-votes">
-                        <img src={sortUp} alt="" style={{ width: '20px' }}    onClick={handleUpVote} />
+                      <div className="question-votes" >
+                      <div  onClick={handleUpVote} 
+
+
+                      style={{color: question.upVotes.includes(User?.result._id)? "#f38225":"",
+                      borderColor: question.upVotes.includes(User?.result._id)? "#f38225":""}}>
+
+                      <BiSolidUpArrow/>
+                      </div>
                         <p>{question.upVotes.length - question.downVotes.length}</p>
-                        <img src={sortDown} alt="" style={{ width: '20px' }}   onClick={handleDownVote} />
+                        <div  onClick={handleDownVote}
+                        style={{color: question.downVotes.includes(User?.result._id)? "#f38225":"",
+                        borderColor: question.downVotes.includes(User?.result._id)? "#f38225":""}}
+                        ><BiSolidDownArrow/></div>
+                        
 
                       </div>
                       <div className="questions-other-details">
-                        <p className="question-body">
-                          {/* < QuestionsDetails body={question.questionBody} /> */}
-                          {parse(question.questionBody)}
-                        </p>
+                        <p className="question-body">  {parse(question.questionBody)}  </p>
                         <div className="widget-tags-div-1">
                           {question.questionTags.map((tag) => (
                             <p className="tag-p" key={tag}>{tag}</p>

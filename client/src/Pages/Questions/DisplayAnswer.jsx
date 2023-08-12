@@ -1,22 +1,25 @@
 import React from 'react'
 import { Link, useParams } from 'react-router-dom'
-import Avatar from '../../Components/Avatar/Avatar'
-import parse from 'html-react-parser';
-import "./QuestionsDetails.css";
 import moment from 'moment';
 import { useSelector, useDispatch } from 'react-redux';
+import parse from 'html-react-parser';
+
+import Avatar from '../../Components/Avatar/Avatar'
+import "./QuestionsDetails.css";
 import { deleteAnswer } from "../../actions/question.js"
+
 const DisplayAnswer = ({ question, handleShare }) => {
+
+
   const User = useSelector((state) => state.currentUserReducer);
   const dispatch = useDispatch();
-
   const { id } = useParams()
 
+  // handle delete answer
   const handleDeleteAnswer = (id, answerId, noOfAnswer) => {
-
     dispatch(deleteAnswer(id, answerId, noOfAnswer));
-
   }
+
   return (
     <div>
       {

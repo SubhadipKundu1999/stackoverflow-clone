@@ -1,29 +1,32 @@
-import React from 'react'
-import "./Avatar.css";
-const Avatar = ({children,backgroundColor,py, px, color,cursor, borderRadius, fontSize }) => {
-const  style =
-{
+import React from "react";
+
+const Avatar = ({
+  children,
+  backgroundColor,
+  px,
+  py,
+  color,
+  borderRadius,
+  fontSize,
+  cursor,
+  width,
+  height
+}) => {
+  const style = {
+    boxSizing: "border-box",
     backgroundColor,
-    padding:`${py} ${px}`,
-    color:color || "center",
-    cursor:  cursor || "pointer",
-    textAllign:"center",
+    padding: `${py} ${px}`,
+    color: color || "black",
     borderRadius,
     fontSize,
-    TextDecoration:"none",
-    display:"flex",
-    justifyContent:"center",
-    color:"black"
-   
-  }
+    textAlign: "center",
+    cursor: cursor || null,
+    textDecoration: "none",
+    width:width,
+    height:height,
+  };
 
-return (
-    <div style={style}>
+  return <div style={style}>{children}</div>;
+};
 
-      {children}
-
-    </div>
-  )
-}
-
-export default Avatar
+export default Avatar;

@@ -1,24 +1,42 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
+
 import { updateProfile } from "../../actions/users";
 
+const colors = [
+  "#454FD8",
+  "#454FD8",
+  "#8B2F81",
+  "#8B2F81",
+  "#C25408",
+  "#DC065A",
+  " #DC065A",
+  "#DC065A",
+  "#944F05",
+  "#DC065A",
+  "#DC065A"
+];
 const EditProfileForm = ({ currentUser, setSwitch }) => {
+
   const [name, setName] = useState(currentUser?.result?.name);
   const [about, setAbout] = useState(currentUser?.result?.about);
   const [tags, setTags] = useState([]);
+  const [color, setColor] = useState(colors[Math.floor(Math.random() * 10)]);
+
   const dispatch = useDispatch();
-  console.log(tags);
   const handleSubmit = (e) => {
     e.preventDefault();
+
     if (tags[0] === "" || tags.length === 0) {
       alert("Update tags field");
-    } else {
-
-      dispatch(updateProfile( currentUser?.result?._id, { name, about, tags} ));
-
+    }
+    else {
+      dispatch(updateProfile(currentUser?.result?._id, { name, about, tags, color }));
     }
     setSwitch(false);
   };
+
+
 
   return (
     <div>
@@ -53,6 +71,8 @@ const EditProfileForm = ({ currentUser, setSwitch }) => {
           />
         </label>
         <br />
+        <div>
+        </div>
         <input type="submit" value="Save profile" className="user-submit-btn" />
         <button
           type="button"

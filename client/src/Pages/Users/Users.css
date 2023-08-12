@@ -2,7 +2,7 @@
   padding: 30px 0px;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-  gap: 30px;
+  gap: 40px;
 }
 
 .user-profile-link {
@@ -10,15 +10,28 @@
   align-items: center;
   justify-content: flex-start;
   text-decoration: none;
-  color: black;
+  width:200px;
+  /* border: 1px solid red; */
+height: 120px;
 }
 
-.user-profile-link h3 {
-  padding: 10px 13px;
-  background-color: #d3d3d3;
-  border-radius: 50%;
+
+.user-profile-link div:nth-child(1) {
+width: 50%;
+text-align: center;
+color:white;
+font-size:28px;
+display: flex;
+align-items: center;
+justify-content: center;
+margin-right: 10px;
+}
+.user-profile-link div:nth-child(2) {
+width: 50%;
 }
 
-.user-profile-link h5 {
-  margin: 0px 10px;
+@media (max-width:760px) {
+  user-profile-link {
+   width: 180px;
+  }
 }
