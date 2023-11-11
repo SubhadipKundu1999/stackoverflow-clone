@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-
+import axios from 'axios';
 import { updateProfile } from "../../actions/users";
 
 const colors = [
@@ -35,7 +35,6 @@ const EditProfileForm = ({ currentUser, setSwitch }) => {
     }
     setSwitch(false);
   };
-
 
 
   return (

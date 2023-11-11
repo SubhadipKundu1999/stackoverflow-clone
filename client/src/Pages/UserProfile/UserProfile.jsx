@@ -33,6 +33,7 @@ const UserProfile = () => {
                 fontSize="50px"
                 px="40px"
                 py="30px"
+                borderRadius={'10px'}
               >
                 {currentProfile?.name.charAt(0).toUpperCase()}
               </Avatar>) :

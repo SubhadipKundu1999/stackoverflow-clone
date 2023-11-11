@@ -24,6 +24,10 @@ const Avatar = ({
     textDecoration: "none",
     width:width,
     height:height,
+    overFlow:'hidden',
+    display:'flex',
+    justifyContent:'center',
+    alignItems:'center'
   };
 
   return <div style={style}>{children}</div>;

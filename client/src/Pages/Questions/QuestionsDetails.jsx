@@ -63,7 +63,7 @@ dispatch(getQuestions())
 
   // handle share functionality
   const handleShare = () => {
-    const url = "http://localhost:3000"
+    const url = "https://stack-overflow-backend-tces.onrender.com/"
     copy(url + location.pathname);
     alert(url + location.pathname);
 

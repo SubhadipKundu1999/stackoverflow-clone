@@ -61,3 +61,25 @@ label h4{
     
     color:red;
 }
+
+
+.message-box{
+    margin-top: 100px;
+    width: 400px;
+    background-color: rgba(195, 240, 195, 0.529);
+    padding: 20px;
+    border-radius: 10px;
+    border: 1px solid green;
+    color: rgba(0, 0, 0, 0.653);
+
+}
+.message-box h4{
+    font-size: 20px;
+    font-weight: 400;
+    line-height:1;
+
+}
+.message-box p{
+    font-size: 16px;
+    font-weight: 300;
+}

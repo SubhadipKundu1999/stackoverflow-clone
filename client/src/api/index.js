@@ -1,7 +1,8 @@
 import axios from "axios";
 
 const Api = axios.create({
-  baseURL: "http://localhost:5000/"
+  baseURL: "https://stack-overflow-backend-tces.onrender.com"
+  // baseURL: "http://localhost:5000/"
 });
 
 Api.interceptors.request.use((req) => {
@@ -14,6 +15,10 @@ Api.interceptors.request.use((req) => {
 });
   export const logIn=(authData)=> Api.post("/user/login",authData);
   export const signUp=(authData)=> Api.post("/user/signup",authData);
+
+  export const forgotPassword=(email)=> Api.post("/user/forgotPassword",{email});
+  
+  export const resetPassword=(token, password)=> Api.put(`/user/resetPassword/${token}`,{password});
 
   export const postQuestion = (questionData)=> Api.post("/questions/Ask" ,questionData);
   export const getPaginatedQuestion=(current, limit) => Api.get(`/questions/paginatedQuestions?page=${current}&limit=${limit}`)

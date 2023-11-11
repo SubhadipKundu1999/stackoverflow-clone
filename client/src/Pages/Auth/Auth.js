@@ -1,11 +1,11 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import icon from "../../assets/icon.png"
 import AboutAuth from './AboutAuth';
 import "./Auth.css"
 import { signup, login } from "../../actions/auth"
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
-import { NavLink, useNavigate } from 'react-router-dom'
+import { Link, NavLink, useNavigate } from 'react-router-dom'
 
 
 const Auth = () => {
@@ -19,6 +19,13 @@ const Auth = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const User = useSelector((state) => (state.currentUserReducer));
+    
+  useEffect(()=>{
+    if(User){
+      navigate("/")
+    }
+    })
 
   // handle toggle betwwn signup and login
   const handleSwitchBtn = () => {
@@ -70,7 +77,7 @@ const Auth = () => {
           <label htmlFor="password">
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
               <h4>Password</h4>
-              {!isSignUp && <p style={{ color: "#007ac6", fontSize: "13px" }}>Forgot Password?</p>}
+              {!isSignUp && <Link to="/Auth/recovery-account" style={{ color: "#007ac6", fontSize: "13px" }}>Forgot Password?</Link>}
             </div>
             <input type="password" name="password" id="password" email={password} onChange={(e) => setPassword(e.target.value)} />
           </label>

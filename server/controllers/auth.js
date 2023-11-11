@@ -1,7 +1,58 @@
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 import users from "../model/authModel.js";
+import Crypto from "crypto"
+import {createTransport} from "nodemailer"
 
+const sendEmail = async (to, subject, message)=>{
+
+
+    // testing
+
+// var transporter = createTransport({
+//     host: process.env.SMPT_HOST,
+//     port:process.env.SMPT_PORT ,
+//     auth: {
+//       user: process.env.SMPT_USER,
+//       pass: process.env.SMPT_PASS,
+//     },
+//   });
+
+// await transporter.sendMail({
+//     to,
+//     subject, 
+//     text,
+//     from :"subhadipkundu1000@gmail.com",
+// });
+
+/* send mail actually*/
+
+const transport =createTransport({
+    service:'gmail',
+    auth:{
+        user: process.env.AUTH_USER_EMAIL,
+        pass:process.env.AUTH_USER_PASS,
+    }
+})
+
+const mailOptions = {
+    from: process.env.SENDER_EMAIL,
+    to,
+    subject,
+    html:message
+}
+
+await transport.sendMail(mailOptions, (error,info)=>{
+    if(error) return console.log(error.message);
+
+    console.log('Mail send successfully')
+})
+
+
+}
+
+
+// sign up
 export const signup = async (req, res) => {
     const { name, email, password } = req.body;
     try {
@@ -24,6 +75,8 @@ export const signup = async (req, res) => {
     }
 };
 
+// log in
+
 export const login = async (req, res) => {
     const { email, password } = req.body;
     try {
@@ -42,3 +95,94 @@ export const login = async (req, res) => {
         res.status(500).json("Something went worng...");
     }
 };
+
+
+// forgot password
+
+export const forgotPassword= async (req,res)=>{
+    
+    //catch email from request object
+    const {email}= req.body
+
+    try{
+
+        // check user is exist or not
+        const user = await users.findOne({ email:email });
+        if (!user){
+            return res.status(404).json({ message: "User don't Exist." });
+        }
+
+        // generate token and save to db
+        const resetToken = Crypto.randomBytes(20).toString("hex");
+        const token = Crypto
+                    .createHash("sha256")
+                    .update(resetToken)
+                    .digest("hex");
+        await users.updateOne({email:email},{$set:{resetPasswordToken:token, resetPasswordExpire:Date.now()+15*60*1000}});
+       
+        // send via email
+        const url = `${process.env.FRONTEND_URL}/Auth/resetPassword/${resetToken}`
+        const message =
+        `<p>Hello,</p>
+        <p>You have requested to reset your password. To complete the password reset process, please click the button below within the next 5 minutes:</p>
+    
+        <a href= ${url}>
+            <button style="background-color: #007BFF; color: #fff; padding: 10px 20px; border: none; cursor: pointer;">Reset Your Password</button>
+        </a>
+    
+        <p>If you did not request a password reset, please disregard this message. Your account's security is important to us.</p>
+    
+        <p>This link will expire in 5 minutes, so be sure to use it promptly.</p>
+    
+        <p>Thank you for using our service!</p>`
+        await sendEmail(user.email, "S-stack-overflow Reset Password", message);
+
+        // send message to client
+        res.status(200).json({
+            success:true,
+            message:`Reset Token has been sent to ${user.email}`,
+        })
+       
+    }  
+      catch(error){
+        res.status(405).json({message:error.message, error:"error"});
+    }
+
+}
+
+export const resetPassword= async (req,res)=>{
+
+    const {token} = req.params;
+    const {password} = req.body;
+
+
+    try{
+
+     const resetPasswordToken = Crypto
+        .createHash("sha256")
+        .update(token)
+        .digest("hex");
+
+      const user = await users.findOne({
+        resetPasswordToken,
+        resetPasswordExpire:{
+        $gt:Date.now()
+        },
+      });
+      if(!user)  return res.status(401).json({ message: "TOken is invalid or has been expired" });
+      const hashedPassword = await bcrypt.hash(password, 10);
+       
+      await users.updateOne({resetPasswordToken:resetPasswordToken},{$set:{ password:hashedPassword, resetPasswordToken:undefined, resetPasswordExpire:undefined}});
+       
+       res.status(200).json({
+        success:true,
+        message:"Password Change successfully"
+       })
+            }
+            catch(error){
+           res.status(405).json({message:error.message});
+            }             
+
+
+
+}

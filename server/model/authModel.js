@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose, { Schema } from "mongoose";
 mongoose.set('strictQuery', false);
 
 const userSchema = mongoose.Schema(
@@ -9,7 +9,10 @@ const userSchema = mongoose.Schema(
         about:{type:String },
         tags:{type:[String]},
         joinedOn:{type:Date, default:Date.now},
-        color:{type:String, default:"#009dff"}
+        color:{type:String, default:"#009dff"},
+        resetPasswordToken :String,
+        resetPasswordExpire:String
+
         
     }
 )

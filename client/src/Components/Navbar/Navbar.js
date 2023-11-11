@@ -85,16 +85,16 @@ const Navbar = () => {
         {User == null ? <Link to="/Auth" className="nav-item nav-links autht-btn"> Log In </Link> :
           <>
             <Avatar
-              backgroundColor="#009dff"
-              px="1px"
-              py="1px"
+              backgroundColor="#009dfd"
               borderRadius="50%"
               color="white"
               width='30px'
               height='30px'
-            >
+                            
 
-              <Link to={`/Users/${User?.result?._id}`} style={{ textDecoration: "none", color: "#ffff" }}>
+            >
+              <Link to={`/Users/${User?.result?._id}`}
+               style={{ textDecoration: "none", color: "#ffff" }}>
                 {first_letter}
               </Link>
             </Avatar>
