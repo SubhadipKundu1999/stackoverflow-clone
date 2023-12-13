@@ -17,6 +17,7 @@ const UserProfile = () => {
   const users = useSelector((state) => state.usersReducer);
   const currentProfile = users.filter((user) => user._id === id)[0];
   const color = currentProfile?.color;
+  // console.log(currentProfile);
   const currentUser = useSelector((state) => state.currentUserReducer);
   const [Switch, setSwitch] = useState(false);
 
@@ -27,19 +28,30 @@ const UserProfile = () => {
         <section style={{ padding: "20px" }}>
           <div className="user-details-container">
             <div className="user-details">
-              {currentProfile ? (<Avatar
-                backgroundColor={`${color}` || "#009dff"}
-                color="white"
-                fontSize="50px"
-                px="40px"
-                py="30px"
-                borderRadius={'10px'}
-              >
-                {currentProfile?.name.charAt(0).toUpperCase()}
-              </Avatar>) :
-                (
-                  <Skeleton width={"120px"} height={"120px"}></Skeleton>
-                )
+              {
+                currentProfile?.avatar ?
+                  (
+                    <div>
+                      <img src={currentProfile.avatar} width={'120px'} height={'120px'} alt="" />
+                    </div>
+                  
+                    ) :
+                  currentProfile ? (
+                    <Avatar
+                      backgroundColor={`${color}` || "#009dff"}
+                      color="white"
+                      fontSize="50px"
+                      px="40px"
+                      py="30px"
+                      borderRadius={'10px'}
+                    >
+                      {currentProfile?.name.charAt(0).toUpperCase()}
+                    </Avatar>
+                  )
+                    :
+                    (
+                      <Skeleton width={"120px"} height={"120px"}></Skeleton>
+                    )
               }
 
               <div className="user-name">
@@ -47,6 +59,7 @@ const UserProfile = () => {
                 </Skeleton>
                 }
                 <p>
+
                   <FontAwesomeIcon icon={faBirthdayCake} /> Joined{" "}
                   {moment(currentProfile?.joinedOn).fromNow()}
                 </p>

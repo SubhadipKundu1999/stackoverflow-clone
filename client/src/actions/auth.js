@@ -24,8 +24,9 @@ export const login = (authData, setError, navigate) => async (dispatch) => {
   try {
     const { data } = await api.logIn(authData);
     dispatch({ type: "Auth", data });
-    dispatch(setCurrentUser(JSON.parse(localStorage.getItem("Profile"))));  // set current use
+    dispatch(setCurrentUser(JSON.parse(localStorage.getItem("Profile"))));  // set current user
     console.log("sucessfull")
+    console.log("login",data);
     navigate("/");
   }
   catch (error) {
@@ -62,8 +63,43 @@ export const resetPasswordAction = async (token, password, setError) =>  {
   }
 
   catch (error) {
-    setError("Something went wrong");
+    setError("Something went wrong!!!");
 
   }
 }
 
+
+
+//google auth
+
+
+export const signupGoogle = (accessToken, navigate, setError) => async (dispatch)=>{
+  try{
+      // signup user
+
+      const {data} = await api.signUpGoogle(accessToken)
+      dispatch({ type: "Auth", data });
+    dispatch(setCurrentUser(JSON.parse(localStorage.getItem('Profile')))); // set current user
+    navigate("/");
+  }catch(err){
+  setError("user already exist");
+      console.log(err)
+  }
+}
+
+export const signinGoogle = (accessToken, navigate, setError) => async (dispatch)=>{
+  try{
+      // login user
+      const {data} = await api.signInGoogle(accessToken)
+
+      dispatch({ type: "Auth", data });
+    dispatch(setCurrentUser(JSON.parse(localStorage.getItem("Profile"))));  // set current user
+    console.log("sucessfull")
+    console.log("login",data);
+
+    navigate("/");
+  }catch(err){
+    setError("user does not exist");
+      console.log(err)
+  }
+}

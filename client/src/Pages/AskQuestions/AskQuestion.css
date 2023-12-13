@@ -58,7 +58,7 @@ box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 
     font-size: 13px;
 }
 .ask-ques-container-2 p{
-    line-height: 0;
+    line-height: 1;
 }
 .ask-ques-container-2 input{
 width:100%;

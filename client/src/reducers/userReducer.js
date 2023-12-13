@@ -4,7 +4,6 @@ switch(action.type){
       return action.payLoad;
     default:
         return state;
-
 }
 }
 

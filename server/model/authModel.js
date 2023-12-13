@@ -11,10 +11,11 @@ const userSchema = mongoose.Schema(
         joinedOn:{type:Date, default:Date.now},
         color:{type:String, default:"#009dff"},
         resetPasswordToken :String,
-        resetPasswordExpire:String
-
-        
+        resetPasswordExpire:String,
+        avatar:{type:String}
     }
+   
+    
 )
 
 export default mongoose.model("User", userSchema)

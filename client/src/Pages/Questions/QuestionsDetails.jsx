@@ -27,7 +27,7 @@ const QuesionsDetails = () => {
     
   })
   let questionList = useSelector((state) => state.questionsReducer)
-  console.log(questionList)
+
   questionList = questionList.data;
   const navigate = useNavigate()
   const dispatch = useDispatch();

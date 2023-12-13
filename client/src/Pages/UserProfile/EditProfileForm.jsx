@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import axios from 'axios';
 import { updateProfile } from "../../actions/users";
+
 
 const colors = [
   "#454FD8",
@@ -22,7 +22,7 @@ const EditProfileForm = ({ currentUser, setSwitch }) => {
   const [about, setAbout] = useState(currentUser?.result?.about);
   const [tags, setTags] = useState([]);
   const [color, setColor] = useState(colors[Math.floor(Math.random() * 10)]);
-
+  const [image, setImage] = useState();
   const dispatch = useDispatch();
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -30,8 +30,12 @@ const EditProfileForm = ({ currentUser, setSwitch }) => {
     if (tags[0] === "" || tags.length === 0) {
       alert("Update tags field");
     }
+
     else {
-      dispatch(updateProfile(currentUser?.result?._id, { name, about, tags, color }));
+      console.log(image);
+
+
+      dispatch(updateProfile(currentUser?.result?._id, { name, about, tags, color, image}));
     }
     setSwitch(false);
   };
@@ -69,6 +73,17 @@ const EditProfileForm = ({ currentUser, setSwitch }) => {
             onChange={(e) => setTags(e.target.value.split(" "))}
           />
         </label>
+        <br />
+{/* image upload */}
+        <div>
+        <input 
+        type="file"  
+         accept="image/*" 
+         onChange={(e) => setImage(e.target.files[0])}
+         name="imageurl"
+          id="img-url" />
+        </div>
+
         <br />
         <div>
         </div>

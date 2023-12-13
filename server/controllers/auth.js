@@ -1,4 +1,5 @@
 import jwt from "jsonwebtoken";
+import axios from 'axios';
 import bcrypt from "bcryptjs";
 import users from "../model/authModel.js";
 import Crypto from "crypto"
@@ -54,7 +55,44 @@ await transport.sendMail(mailOptions, (error,info)=>{
 
 // sign up
 export const signup = async (req, res) => {
-    const { name, email, password } = req.body;
+    if (req.body.googleAccessToken) {
+        const {googleAccessToken} = req.body;
+        console.log(googleAccessToken);
+
+        axios
+            .get("https://www.googleapis.com/oauth2/v3/userinfo", {
+            headers: {
+                "Authorization": `Bearer ${googleAccessToken}`
+            }
+        })
+            .then(async response => {
+                const name = response.data.name;
+                const email = response.data.email;
+                const avatar = response.data.picture;
+
+                const existingUser = await users.findOne({email})
+                console.log(existingUser);
+                if (existingUser) 
+                    return res.status(400).json({message: "User already exist!"})
+
+                const newUser = await users.create({name, email, password:"12345", avatar})
+
+                const token = jwt.sign({ email: newUser.email }, process.env.JWT_SECRET,{ expiresIn: '1h' });
+                res
+                    .status(200)
+                    .json({result:newUser, token})
+            })
+            .catch(err => {
+                console.log(err)
+                res
+                    .status(400)
+                    .json({message: "Invalid access token!"})
+            })
+
+    }
+
+    else{
+        const { name, email, password } = req.body;
     try {
         const existinguser = await users.findOne({ email });
         if (existinguser) {
@@ -71,13 +109,52 @@ export const signup = async (req, res) => {
         const token = jwt.sign({ email: newUser.email }, process.env.JWT_SECRET,{ expiresIn: '1h' });
         res.status(200).json({ result: newUser, token });
     } catch (error) {
+        console.log(error);
         res.status(500).json("Something went worng...");
     }
+    }
+    
 };
 
 // log in
 
 export const login = async (req, res) => {
+    if(req.body.googleAccessToken){
+        // gogole-auth
+        const {googleAccessToken} = req.body;
+
+        axios
+            .get("https://www.googleapis.com/oauth2/v3/userinfo", {
+            headers: {
+                "Authorization": `Bearer ${googleAccessToken}`
+            }
+        })
+            .then(async response => {
+              
+                name:response.data.name
+                const email = response.data.email;
+                const avatar = response.data.picture;
+
+                const existingUser = await users.findOne({email})
+
+                if (!existingUser) 
+                return res.status(404).json({message: "User don't exist!"})
+
+                const token = jwt.sign({ email: existingUser.email }, process.env.JWT_SECRET,{ expiresIn: '1h' });
+        
+                res
+                    .status(200)
+                    .json({result: existingUser, token})
+                    
+            })
+            .catch(err => {
+                console.log(err);
+                res
+                    .status(400)
+                    .json({err: err.data, message: "Invalid access token!"})
+            })
+}
+    else{
     const { email, password } = req.body;
     try {
         const existinguser = await users.findOne({ email });
@@ -94,6 +171,8 @@ export const login = async (req, res) => {
     } catch (error) {
         res.status(500).json("Something went worng...");
     }
+
+}
 };
 
 
@@ -121,7 +200,7 @@ export const forgotPassword= async (req,res)=>{
         await users.updateOne({email:email},{$set:{resetPasswordToken:token, resetPasswordExpire:Date.now()+15*60*1000}});
        
         // send via email
-        const url = `${process.env.FRONTEND_URL}/Auth/resetPassword/${resetToken}`
+        const url = `${process.env.FRONTEND_URL}Auth/resetPassword/${resetToken}`
         const message =
         `<p>Hello,</p>
         <p>You have requested to reset your password. To complete the password reset process, please click the button below within the next 5 minutes:</p>

@@ -26,7 +26,12 @@ const DisplayAnswer = ({ question, handleShare }) => {
         question.answer.map((ans) => (
 
           <div className="display-ans">
-            <p>{parse(ans.answerBody)}</p>
+            {
+              (ans?.answerBody)?
+              <p>{parse(ans?.answerBody)}</p>
+              :<></>
+            }
+           
             <div className="question-action-user">
               <div >
 

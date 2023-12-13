@@ -1,8 +1,8 @@
 import axios from "axios";
 
 const Api = axios.create({
-  baseURL: "https://stack-overflow-backend-tces.onrender.com"
-  // baseURL: "http://localhost:5000/"
+  // baseURL: "https://stack-overflow-backend-tces.onrender.com"
+  baseURL: "http://localhost:5000/"
 });
 
 Api.interceptors.request.use((req) => {
@@ -14,7 +14,14 @@ Api.interceptors.request.use((req) => {
   return req;
 });
   export const logIn=(authData)=> Api.post("/user/login",authData);
+  export const signInGoogle = (accessToken) => Api.post("/user/login", {
+    googleAccessToken: accessToken
+})
   export const signUp=(authData)=> Api.post("/user/signup",authData);
+  export const signUpGoogle = (accessToken) => Api.post("/user/signup", {
+    googleAccessToken: accessToken
+})
+
 
   export const forgotPassword=(email)=> Api.post("/user/forgotPassword",{email});
   
@@ -30,5 +37,6 @@ Api.interceptors.request.use((req) => {
   export const deleteAnswer=(id, answerId,noOfAnswer)=>Api.patch(`/answer/delete/${id}`,{answerId,noOfAnswer});
  
   export const getAllUsers = ()=>Api.get("/user/getAllUsers");
-  export const updateProfile=(id, data)=> Api.patch(`user/update/${id}`,data);
+  export const updateProfile=(id, data)=> Api.patch(`/user/update/${id}`,data);
+  export const getUserById=(id)=> Api.post(`/user/getUserById/${id}`);
   

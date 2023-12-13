@@ -12,7 +12,14 @@ import bars from "../../assets/bars-solid.svg"
 
 
 const Navbar = () => {
-
+  // handle leftbar slide in function
+  const [slideIn, setSlideIn] = useState(true);
+  // useEffect(() => {
+  //   if (window.innerWidth <= 760) {
+  //     setSlideIn(false);
+  //     dispatch({ type: "CHANGE_STATE", payLoad: slideIn })
+  //   }
+  // }, []);
   const Navigate = useNavigate()
   const User = useSelector((state) => state.currentUserReducer);
   const dispatch = useDispatch()
@@ -33,26 +40,25 @@ const Navbar = () => {
         handleLogOut();
       }
     }
-    dispatch(setCurrentUser(JSON.parse(localStorage.getItem('Profile'))));
-  }, [dispatch])
-
-
-
-  let first_letter = "m";
-  if (User) {
-    const user_name = User.result.name;
-    first_letter = user_name.charAt(0);
-  }
-
-
-// handle leftbar slide in function
-  const [slideIn, setSlideIn] = useState(true);
-  useEffect(() => {
     if (window.innerWidth <= 760) {
       setSlideIn(false);
       dispatch({ type: "CHANGE_STATE", payLoad: slideIn })
     }
-  }, []);
+    dispatch(setCurrentUser(JSON.parse(localStorage.getItem('Profile'))));
+  }, [User?.token, dispatch])
+
+
+
+  let first_letter = "m";
+  let avatar;
+  if (User) {
+    const user_name = User?.result?.name;
+    first_letter = user_name?.charAt(0);
+    avatar = User?.result?.avatar;
+  }
+
+
+
 
   const handleSlideIn = () => {
     if (window.innerWidth <= 760) {
@@ -84,20 +90,27 @@ const Navbar = () => {
 
         {User == null ? <Link to="/Auth" className="nav-item nav-links autht-btn"> Log In </Link> :
           <>
-            <Avatar
+          <Link to={`/Users/${User?.result?._id}`}>
+            {
+              avatar ? (
+<img src={avatar} alt="" height={'30px'} width={'30px'} style={{borderRadius:'50%'}}/>
+              ):(
+<Avatar
               backgroundColor="#009dfd"
               borderRadius="50%"
               color="white"
               width='30px'
               height='30px'
-                            
-
             >
-              <Link to={`/Users/${User?.result?._id}`}
+              <p 
                style={{ textDecoration: "none", color: "#ffff" }}>
                 {first_letter}
-              </Link>
+              </p>
             </Avatar>
+              )
+            }
+            
+            </Link>
             <button className='nav-links nav-item ' onClick={handleLogOut}> Log Out</button>
           </>
         }
